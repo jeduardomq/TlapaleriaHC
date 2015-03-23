@@ -57,11 +57,9 @@ public class modificarProducto extends javax.swing.JFrame {
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
         jButton1.setText("Guardar");
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 8, -1, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jButton2.setText("Cancelar");
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(229, 8, -1, -1));
 
