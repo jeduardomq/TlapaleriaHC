@@ -8,10 +8,12 @@ public class Conneccion {
     Connection link;
     PreparedStatement preparar;
         public String bd="tlapaleriahc";
-        public String url="jdbc:mysql://http://192.168.1.68:3306//"+bd;
+        public String url="jdbc:mysql://http://shift-f6.ddns.net/"+bd;
         public String user="eduardomq";
         public String pass="lalo12345";
 
+        //public String bd="tienda_de_abarrotes";
+        //public String url="jdbc:mysql://localhost/"+bd;
  
 public  Connection conectar(){
             Connection link = null;
@@ -23,5 +25,5 @@ public  Connection conectar(){
             JOptionPane.showMessageDialog(null, e);
         }
     return link;
-    } 
+    }
 }
