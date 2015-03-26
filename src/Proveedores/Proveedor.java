@@ -36,6 +36,7 @@ public class Proveedor extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         MODIFICAR = new javax.swing.JButton();
         AGREGAR = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -61,44 +62,53 @@ public class Proveedor extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 650, 250));
+        getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 660, 270));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("L O G O");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 90, 70));
 
+        FINALIZAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
         FINALIZAR.setText("Finalizar");
-        getContentPane().add(FINALIZAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 380, -1, -1));
+        getContentPane().add(FINALIZAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, 120, 40));
 
+        jPanel1.setBackground(new java.awt.Color(220, 220, 220));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        MODIFICAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
         MODIFICAR.setText("Modificar");
         MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MODIFICARActionPerformed(evt);
             }
         });
-        jPanel1.add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jPanel1.add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 100, 60));
 
+        AGREGAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
         AGREGAR.setText("Agregar");
         AGREGAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AGREGARActionPerformed(evt);
             }
         });
-        jPanel1.add(AGREGAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+        jPanel1.add(AGREGAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 80));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, 130, 150));
+        jButton1.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        jButton1.setText("Eliminar");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 100, 40));
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 120, 220));
+
+        jPanel2.setBackground(new java.awt.Color(230, 230, 230));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Busqueda");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 40));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 250, 30));
+        jLabel3.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        jLabel3.setText("Buscar:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 30));
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 310, 30));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, 50));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 390, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -153,6 +163,7 @@ public class Proveedor extends javax.swing.JFrame {
     private javax.swing.JButton AGREGAR;
     private javax.swing.JButton FINALIZAR;
     private javax.swing.JButton MODIFICAR;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
