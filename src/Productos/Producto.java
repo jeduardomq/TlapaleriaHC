@@ -27,6 +27,7 @@ public class Producto extends javax.swing.JFrame {
     public Producto() {
         initComponents();
 //        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setLocationRelativeTo(null);
         cargartabla("");
 
     }
@@ -38,8 +39,8 @@ public class Producto extends javax.swing.JFrame {
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Producto ";
-//                    + "WHERE Nombre LIKE '%" + valor + "%'";
+        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Producto "
+                + "WHERE nombre LIKE '%" + valor + "%'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
@@ -68,13 +69,13 @@ public class Producto extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        FINALIZAR = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        BUSCAR = new javax.swing.JTextField();
         AGREGAR = new javax.swing.JButton();
         MODIFICAR = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        FINALIZAR1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("P R O D U C T O S");
@@ -105,22 +106,27 @@ public class Producto extends javax.swing.JFrame {
         jLabel2.setText("L O G O");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 90, 70));
 
-        FINALIZAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
-        FINALIZAR.setText("Finalizar");
-        FINALIZAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FINALIZARActionPerformed(evt);
-            }
-        });
-        getContentPane().add(FINALIZAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 110, 50));
-
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(45, 45, 45));
         jLabel3.setText("Buscar:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 60, 30));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 270, 30));
+
+        BUSCAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BUSCARActionPerformed(evt);
+            }
+        });
+        BUSCAR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BUSCARKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BUSCARKeyReleased(evt);
+            }
+        });
+        jPanel2.add(BUSCAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 270, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 390, 50));
 
@@ -146,6 +152,15 @@ public class Producto extends javax.swing.JFrame {
         jButton1.setText("Eliminar");
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 110, 40));
 
+        FINALIZAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        FINALIZAR1.setText("Finalizar");
+        FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FINALIZAR1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 110, 50));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -155,15 +170,35 @@ public class Producto extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_AGREGARActionPerformed
 
-    private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZARActionPerformed
+    private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
-    }//GEN-LAST:event_FINALIZARActionPerformed
+    }                                         
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
         modificarProducto mp = new modificarProducto();
         mp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MODIFICARActionPerformed
+
+
+    private void BUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BUSCARActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BUSCARActionPerformed
+
+    private void BUSCARKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BUSCARKeyPressed
+        String valor = BUSCAR.getText();
+        cargartabla(valor);
+    }//GEN-LAST:event_BUSCARKeyPressed
+
+    private void BUSCARKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BUSCARKeyReleased
+        String valor = BUSCAR.getText();
+        cargartabla(valor);
+    }//GEN-LAST:event_BUSCARKeyReleased
+
+    private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FINALIZAR1ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -203,7 +238,8 @@ public class Producto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AGREGAR;
-    private javax.swing.JButton FINALIZAR;
+    private javax.swing.JTextField BUSCAR;
+    private javax.swing.JButton FINALIZAR1;
     private javax.swing.JButton MODIFICAR;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -211,7 +247,6 @@ public class Producto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
