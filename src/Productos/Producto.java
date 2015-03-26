@@ -27,32 +27,30 @@ public class Producto extends javax.swing.JFrame {
     public Producto() {
         initComponents();
 //        this.setExtendedState(MAXIMIZED_BOTH);
-//        cargartabla("");
+        cargartabla("");
 
     }
 
     public void cargartabla(String valor) {
-        String[] titulos = {"Clave", "Nombre", "Marca", "Precio", "Unidad de Medid", "SKUProv", "Descripcion"};
-        String[] registro = new String[6];
+        String[] titulos = {"Clave", "Nombre", "Marca", "Precio", "Unidad de Medida", "SKUProv", "Descripcion"};
+        String[] registro = new String[7];
         String aSQL = "";
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Productos ";
+        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Producto ";
 //                    + "WHERE Nombre LIKE '%" + valor + "%'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
-                registro[0] = rs.getString("CveProd");
-                registro[1] = rs.getString("Nombre");
-                registro[2] = rs.getString("Marca");
-                registro[3] = rs.getString("Descripcion");
-                registro[4] = rs.getString("Contenido_Neto");
-                registro[5] = rs.getString("Unidad_Medida");
-                registro[6] = rs.getString("Precio");
-                registro[7] = rs.getString("Existencia");
-                registro[8] = rs.getString("Fecha_de_Cad");
+                registro[0] = rs.getString("cveProducto");
+                registro[1] = rs.getString("nombre");
+                registro[2] = rs.getString("marca");
+                registro[3] = rs.getString("precio");
+                registro[4] = rs.getString("volMedida");
+                registro[5] = rs.getString("SKUProveedor");
+                registro[6] = rs.getString("descripcion");
 
                 modelo.addRow(registro);
             }
@@ -79,6 +77,7 @@ public class Producto extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("P R O D U C T O S");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

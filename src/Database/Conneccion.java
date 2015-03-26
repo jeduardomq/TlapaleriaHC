@@ -8,9 +8,11 @@ public class Conneccion {
     Connection link;
     PreparedStatement preparar;
         public String bd="tlapaleriahc";
-        public String url="jdbc:mysql://http://shift-f6.ddns.net/"+bd;
-        public String user="eduardomq";
-        public String pass="lalo12345";
+//        public String url="jdbc:mysql://localhost/"+bd;
+//        public String url="jdbc:mysql://192.168.1.68/"+bd;
+        public String url="jdbc:mysql://shift-f6.ddns.net/"+bd;
+        public String user="root";
+        public String pass="";
 
         //public String bd="tienda_de_abarrotes";
         //public String url="jdbc:mysql://localhost/"+bd;
@@ -22,7 +24,7 @@ public  Connection conectar(){
             link = DriverManager.getConnection(this.url,this.user,this.pass);
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, "ERROR  "+e.getMessage());
         }
     return link;
     }
