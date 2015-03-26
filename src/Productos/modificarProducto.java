@@ -13,17 +13,36 @@ import javax.swing.JOptionPane;
  */
 public class modificarProducto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Inventario
-     */
-    
-    public modificarProducto(String a) {}
+    String nombre, marca, precio, volumen, sku, descripcion;
+
+    //nombre, marca,precio, volumen, sku,descripcion,,clave
+    public modificarProducto(String nombre, String marca, String precio, String volumen, String sku, String descripcion) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.nombre = nombre;
+        this.marca = marca;
+        this.precio = precio;
+        this.volumen = volumen;
+        this.sku = sku;
+        this.descripcion = descripcion;
+        llenarDatos();
+    }
+
     public modificarProducto() {
         initComponents();
         this.setLocationRelativeTo(null);
+        llenarDatos();
     }
 
-  
+    public void llenarDatos() {
+        Nom.setText(nombre);
+        Mar.setText(marca);
+        Pre.setText(precio);
+        Vol.setSelectedItem(volumen);
+        Sku.setText(sku);
+        Des.setText(descripcion);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -39,13 +58,13 @@ public class modificarProducto extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        Nom = new javax.swing.JTextField();
+        Mar = new javax.swing.JTextField();
+        Pre = new javax.swing.JTextField();
+        Vol = new javax.swing.JComboBox();
+        Sku = new javax.swing.JTextField();
+        Des = new javax.swing.JTextField();
+        Cla = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,17 +109,17 @@ public class modificarProducto extends javax.swing.JFrame {
 
         jLabel8.setText("Clave");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 242, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 11, 135, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 49, 135, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 87, 135, -1));
+        jPanel1.add(Nom, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 11, 135, -1));
+        jPanel1.add(Mar, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 49, 135, -1));
+        jPanel1.add(Pre, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 87, 135, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Litros", "Metros", "Kilos" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 125, 126, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 163, 126, -1));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 201, 135, -1));
+        Vol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Litros", "Metros", "Kilos" }));
+        jPanel1.add(Vol, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 125, 126, -1));
+        jPanel1.add(Sku, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 163, 126, -1));
+        jPanel1.add(Des, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 201, 135, -1));
 
-        jTextField6.setEnabled(false);
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 239, 135, -1));
+        Cla.setEnabled(false);
+        jPanel1.add(Cla, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 239, 135, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -186,9 +205,15 @@ public class modificarProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Cla;
+    private javax.swing.JTextField Des;
+    private javax.swing.JTextField Mar;
+    private javax.swing.JTextField Nom;
+    private javax.swing.JTextField Pre;
+    private javax.swing.JTextField Sku;
+    private javax.swing.JComboBox Vol;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -199,11 +224,5 @@ public class modificarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

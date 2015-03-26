@@ -7,6 +7,7 @@ package Productos;
 
 import Database.Conneccion;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author SWO
  */
 public class Producto extends javax.swing.JFrame {
-
+    
     DefaultTableModel modelo;
 
     /**
@@ -29,9 +30,9 @@ public class Producto extends javax.swing.JFrame {
 //        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         cargartabla("");
-
+        
     }
-
+    
     public void cargartabla(String valor) {
         String[] titulos = {"Clave", "Nombre", "Marca", "Precio", "Unidad de Medida", "SKUProv", "Descripcion"};
         String[] registro = new String[7];
@@ -52,7 +53,7 @@ public class Producto extends javax.swing.JFrame {
                 registro[4] = rs.getString("volMedida");
                 registro[5] = rs.getString("SKUProveedor");
                 registro[6] = rs.getString("descripcion");
-
+                
                 modelo.addRow(registro);
             }
             tabla.setModel(modelo);
@@ -60,7 +61,7 @@ public class Producto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,6 +73,7 @@ public class Producto extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         BUSCAR = new javax.swing.JTextField();
+        MODIFICAR = new javax.swing.JButton();
         FINALIZAR1 = new javax.swing.JButton();
         ELIMINAR = new javax.swing.JButton();
         AGREGAR1 = new javax.swing.JButton();
@@ -130,6 +132,15 @@ public class Producto extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 390, 50));
 
+        MODIFICAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        MODIFICAR.setText("Modificar");
+        MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MODIFICARActionPerformed(evt);
+            }
+        });
+        getContentPane().add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 110, 60));
+
         FINALIZAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
         FINALIZAR1.setText("Finalizar");
         FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +152,11 @@ public class Producto extends javax.swing.JFrame {
 
         ELIMINAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
         ELIMINAR.setText("Eliminar");
+        ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ELIMINARActionPerformed(evt);
+            }
+        });
         getContentPane().add(ELIMINAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 110, 40));
 
         AGREGAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
@@ -167,10 +183,10 @@ public class Producto extends javax.swing.JFrame {
     private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
     }                                         
-
+    
 
     private void BUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BUSCARActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_BUSCARActionPerformed
 
     private void BUSCARKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BUSCARKeyPressed
@@ -188,17 +204,55 @@ public class Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_FINALIZAR1ActionPerformed
 
     private void AGREGAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGREGAR1ActionPerformed
-        agregarProducto mp=new agregarProducto();
+        agregarProducto mp = new agregarProducto();
         mp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_AGREGAR1ActionPerformed
 
     private void MODIFICAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICAR1ActionPerformed
-        modificarProducto mp=new modificarProducto();
+        modificarProducto mp = new modificarProducto();
         mp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MODIFICAR1ActionPerformed
 
+    private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
+        String nombre = "";
+        String marca = "";
+        String precio = "";
+        String volumen = "";
+        String sku = "";
+        String descripcion = "";
+        
+        modificarProducto mp = new modificarProducto(nombre, marca, precio, volumen, sku, descripcion);
+        mp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_MODIFICARActionPerformed
+
+    private void ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARActionPerformed
+        int reply = JOptionPane.showConfirmDialog(this, "¿Desea Eliminar el Producto? ", "ELIMINAR", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+//            JOptionPane.showMessageDialog(this,"NO TIENES EL PODER");
+            int fila = tabla.getSelectedRow();
+            if (fila >= 0) {
+                String clave = tabla.getValueAt(fila, 0).toString();
+                System.out.println(clave);
+                
+                Conneccion mysql = new Conneccion();
+                Connection cn = mysql.conectar();
+                String aSQL = "DELETE FROM Producto WHERE cveProducto='" + clave + "'";
+                try {                    
+                    PreparedStatement pstm = cn.prepareStatement(aSQL);                    
+                    pstm.executeUpdate();
+                    pstm.close();                    
+                    JOptionPane.showMessageDialog(this, "Eliminacion Exitosa", "Eliminacion", 1);
+                    cargartabla("");
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }                
+                
+            }
+        }
+    }//GEN-LAST:event_ELIMINARActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,6 +295,7 @@ public class Producto extends javax.swing.JFrame {
     private javax.swing.JTextField BUSCAR;
     private javax.swing.JButton ELIMINAR;
     private javax.swing.JButton FINALIZAR1;
+    private javax.swing.JButton MODIFICAR;
     private javax.swing.JButton MODIFICAR1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

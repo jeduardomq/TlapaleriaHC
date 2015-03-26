@@ -47,7 +47,9 @@ public class agregarProducto extends javax.swing.JFrame {
             pst.setString(6, desc);
 
             int n = pst.executeUpdate();
-
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Los datos se guardaron Correctamente");
+                }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -212,7 +214,7 @@ public class agregarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
-            insert();
+        insert();
         Producto p= new Producto();
         p.setVisible(true);
         this.setVisible(false);
