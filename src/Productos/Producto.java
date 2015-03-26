@@ -72,10 +72,10 @@ public class Producto extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         BUSCAR = new javax.swing.JTextField();
-        AGREGAR = new javax.swing.JButton();
-        MODIFICAR = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         FINALIZAR1 = new javax.swing.JButton();
+        ELIMINAR = new javax.swing.JButton();
+        AGREGAR1 = new javax.swing.JButton();
+        MODIFICAR1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("P R O D U C T O S");
@@ -130,28 +130,6 @@ public class Producto extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 390, 50));
 
-        AGREGAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
-        AGREGAR.setText("Agregar");
-        AGREGAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AGREGARActionPerformed(evt);
-            }
-        });
-        getContentPane().add(AGREGAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 110, 80));
-
-        MODIFICAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
-        MODIFICAR.setText("Modificar");
-        MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MODIFICARActionPerformed(evt);
-            }
-        });
-        getContentPane().add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 110, 60));
-
-        jButton1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
-        jButton1.setText("Eliminar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 110, 40));
-
         FINALIZAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
         FINALIZAR1.setText("Finalizar");
         FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
@@ -161,24 +139,34 @@ public class Producto extends javax.swing.JFrame {
         });
         getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 110, 50));
 
+        ELIMINAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        ELIMINAR.setText("Eliminar");
+        getContentPane().add(ELIMINAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 110, 40));
+
+        AGREGAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        AGREGAR1.setText("Agregar");
+        AGREGAR1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AGREGAR1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(AGREGAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 110, 80));
+
+        MODIFICAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        MODIFICAR1.setText("Modificar");
+        MODIFICAR1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MODIFICAR1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(MODIFICAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 110, 60));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void AGREGARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGREGARActionPerformed
-        agregarProducto ap = new agregarProducto();
-        ap.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_AGREGARActionPerformed
 
     private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
     }                                         
-
-    private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
-        modificarProducto mp = new modificarProducto();
-        mp.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_MODIFICARActionPerformed
 
 
     private void BUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BUSCARActionPerformed
@@ -198,6 +186,18 @@ public class Producto extends javax.swing.JFrame {
     private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FINALIZAR1ActionPerformed
+
+    private void AGREGAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGREGAR1ActionPerformed
+        agregarProducto mp=new agregarProducto();
+        mp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_AGREGAR1ActionPerformed
+
+    private void MODIFICAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICAR1ActionPerformed
+        modificarProducto mp=new modificarProducto();
+        mp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_MODIFICAR1ActionPerformed
 
 
     /**
@@ -237,11 +237,11 @@ public class Producto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AGREGAR;
+    private javax.swing.JButton AGREGAR1;
     private javax.swing.JTextField BUSCAR;
+    private javax.swing.JButton ELIMINAR;
     private javax.swing.JButton FINALIZAR1;
-    private javax.swing.JButton MODIFICAR;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton MODIFICAR1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
