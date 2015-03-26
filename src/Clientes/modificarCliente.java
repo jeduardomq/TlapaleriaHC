@@ -74,10 +74,10 @@ public class modificarCliente extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 350, -1));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Modificar Producto");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 440, 30));
+        jLabel9.setText("Modificar Cliente");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 30));
 
         jLabel10.setText("Nombre");
 
@@ -211,7 +211,7 @@ public class modificarCliente extends javax.swing.JFrame {
                     .addComponent(jLabel14)))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 350, 340));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 440, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
