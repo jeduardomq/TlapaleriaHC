@@ -27,6 +27,7 @@ public class Producto extends javax.swing.JFrame {
     public Producto() {
         initComponents();
 //        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setLocationRelativeTo(null);
         cargartabla("");
 
     }
@@ -38,8 +39,8 @@ public class Producto extends javax.swing.JFrame {
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Producto ";
-//                    + "WHERE Nombre LIKE '%" + valor + "%'";
+        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Producto "
+                + "WHERE nombre LIKE '%" + valor + "%'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
@@ -74,7 +75,7 @@ public class Producto extends javax.swing.JFrame {
         AGREGAR = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        BUSCAR = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("P R O D U C T O S");
@@ -138,7 +139,21 @@ public class Producto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Busqueda");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 40));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 250, 30));
+
+        BUSCAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BUSCARActionPerformed(evt);
+            }
+        });
+        BUSCAR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BUSCARKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BUSCARKeyReleased(evt);
+            }
+        });
+        jPanel2.add(BUSCAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 250, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, 50));
 
@@ -160,6 +175,20 @@ public class Producto extends javax.swing.JFrame {
     private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZARActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FINALIZARActionPerformed
+
+    private void BUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BUSCARActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BUSCARActionPerformed
+
+    private void BUSCARKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BUSCARKeyPressed
+        String valor = BUSCAR.getText();
+        cargartabla(valor);
+    }//GEN-LAST:event_BUSCARKeyPressed
+
+    private void BUSCARKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BUSCARKeyReleased
+        String valor = BUSCAR.getText();
+        cargartabla(valor);
+    }//GEN-LAST:event_BUSCARKeyReleased
 
     /**
      * @param args the command line arguments
@@ -199,6 +228,7 @@ public class Producto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AGREGAR;
+    private javax.swing.JTextField BUSCAR;
     private javax.swing.JButton FINALIZAR;
     private javax.swing.JButton MODIFICAR;
     private javax.swing.JLabel jLabel1;
@@ -207,7 +237,6 @@ public class Producto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
