@@ -95,7 +95,7 @@ public class modificarProducto extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        MODIFICAR = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -118,13 +118,13 @@ public class modificarProducto extends javax.swing.JFrame {
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        MODIFICAR.setText("Guardar");
+        MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                MODIFICARActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jPanel2.add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +165,7 @@ public class modificarProducto extends javax.swing.JFrame {
         jPanel1.add(Sku, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 163, 126, -1));
         jPanel1.add(Des, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 201, 135, -1));
 
+        Cla.setEditable(false);
         Cla.setEnabled(false);
         jPanel1.add(Cla, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 239, 135, -1));
 
@@ -209,13 +210,13 @@ public class modificarProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
         String clave = Cla.getText();
         modificar(clave);
         Producto p = new Producto();
         p.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_MODIFICARActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,12 +257,12 @@ public class modificarProducto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cla;
     private javax.swing.JTextField Des;
+    private javax.swing.JButton MODIFICAR;
     private javax.swing.JTextField Mar;
     private javax.swing.JTextField Nom;
     private javax.swing.JTextField Pre;
     private javax.swing.JTextField Sku;
     private javax.swing.JComboBox Vol;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

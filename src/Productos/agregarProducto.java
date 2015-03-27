@@ -25,7 +25,7 @@ public class agregarProducto extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public void limpirarDatos() {
+    public void limpiarDatos() {
         nombre.setText("");
         marca.setText("");
         precio.setText("");
@@ -238,7 +238,7 @@ public class agregarProducto extends javax.swing.JFrame {
 
     private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
         insert();
-        limpirarDatos();
+        limpiarDatos();
 //        Producto p = new Producto();
 //        p.setVisible(true);
 //        this.setVisible(false);

@@ -195,9 +195,7 @@ public class Producto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+ 
 
 
     private void BUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BUSCARActionPerformed
@@ -231,7 +229,6 @@ public class Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_MODIFICAR1ActionPerformed
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
-
         int fila = tabla.getSelectedRow();
         if (fila >= 0) {
             String clave = tabla.getValueAt(fila, 0).toString();
