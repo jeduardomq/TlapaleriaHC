@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author SWO
  */
 public class Producto extends javax.swing.JFrame {
-    
+
     DefaultTableModel modelo;
 
     /**
@@ -30,9 +30,9 @@ public class Producto extends javax.swing.JFrame {
 //        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         cargartabla("");
-        
+
     }
-    
+
     public void cargartabla(String valor) {
         String[] titulos = {"Clave", "Nombre", "Marca", "Precio", "Unidad de Medida", "SKUProv", "Descripcion"};
         String[] registro = new String[7];
@@ -53,7 +53,7 @@ public class Producto extends javax.swing.JFrame {
                 registro[4] = rs.getString("volMedida");
                 registro[5] = rs.getString("SKUProveedor");
                 registro[6] = rs.getString("descripcion");
-                
+
                 modelo.addRow(registro);
             }
             tabla.setModel(modelo);
@@ -61,7 +61,22 @@ public class Producto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
+
+    public void eliminar(String clave) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "DELETE FROM Producto WHERE cveProducto='" + clave + "'";
+        try {
+            PreparedStatement pstm = cn.prepareStatement(aSQL);
+            pstm.executeUpdate();
+            pstm.close();
+            JOptionPane.showMessageDialog(this, "Eliminacion Exitosa", "Eliminacion", 1);
+            cargartabla("");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -180,10 +195,10 @@ public class Producto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }                                         
-    
+    }
+
 
     private void BUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BUSCARActionPerformed
 
@@ -216,16 +231,20 @@ public class Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_MODIFICAR1ActionPerformed
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
-        String nombre = "";
-        String marca = "";
-        String precio = "";
-        String volumen = "";
-        String sku = "";
-        String descripcion = "";
-        
-        modificarProducto mp = new modificarProducto(nombre, marca, precio, volumen, sku, descripcion);
-        mp.setVisible(true);
-        this.setVisible(false);
+
+        int fila = tabla.getSelectedRow();
+        if (fila >= 0) {
+            String clave = tabla.getValueAt(fila, 0).toString();
+            String nombre= tabla.getValueAt(fila, 1).toString();
+            String marca = tabla.getValueAt(fila, 2).toString();
+            String precio = tabla.getValueAt(fila, 3).toString();
+            String volumen = tabla.getValueAt(fila,4).toString();
+            String sku = tabla.getValueAt(fila, 5).toString();
+            String descripcion = tabla.getValueAt(fila, 6).toString();
+            modificarProducto mp = new modificarProducto(clave,nombre, marca, precio, volumen, sku, descripcion);
+            mp.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_MODIFICARActionPerformed
 
     private void ELIMINARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELIMINARActionPerformed
@@ -235,21 +254,8 @@ public class Producto extends javax.swing.JFrame {
             int fila = tabla.getSelectedRow();
             if (fila >= 0) {
                 String clave = tabla.getValueAt(fila, 0).toString();
-                System.out.println(clave);
-                
-                Conneccion mysql = new Conneccion();
-                Connection cn = mysql.conectar();
-                String aSQL = "DELETE FROM Producto WHERE cveProducto='" + clave + "'";
-                try {                    
-                    PreparedStatement pstm = cn.prepareStatement(aSQL);                    
-                    pstm.executeUpdate();
-                    pstm.close();                    
-                    JOptionPane.showMessageDialog(this, "Eliminacion Exitosa", "Eliminacion", 1);
-                    cargartabla("");
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }                
-                
+                eliminar(clave);
+
             }
         }
     }//GEN-LAST:event_ELIMINARActionPerformed

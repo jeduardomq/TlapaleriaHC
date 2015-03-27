@@ -5,6 +5,10 @@
  */
 package Productos;
 
+import Database.Conneccion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,18 +17,19 @@ import javax.swing.JOptionPane;
  */
 public class modificarProducto extends javax.swing.JFrame {
 
-    String nombre, marca, precio, volumen, sku, descripcion;
+    String clave, nombre, marca, precio, volumen, sku, descripcion;
 
     //nombre, marca,precio, volumen, sku,descripcion,,clave
-    public modificarProducto(String nombre, String marca, String precio, String volumen, String sku, String descripcion) {
+    public modificarProducto(String clav, String nombr, String marc, String preci, String volume, String sk, String descripcio) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.nombre = nombre;
-        this.marca = marca;
-        this.precio = precio;
-        this.volumen = volumen;
-        this.sku = sku;
-        this.descripcion = descripcion;
+        this.clave = clav;
+        this.nombre = nombr;
+        this.marca = marc;
+        this.precio = preci;
+        this.volumen = volume;
+        this.sku = sk;
+        this.descripcion = descripcio;
         llenarDatos();
     }
 
@@ -35,12 +40,54 @@ public class modificarProducto extends javax.swing.JFrame {
     }
 
     public void llenarDatos() {
+
+        Cla.setText(clave);
         Nom.setText(nombre);
         Mar.setText(marca);
         Pre.setText(precio);
         Vol.setSelectedItem(volumen);
         Sku.setText(sku);
         Des.setText(descripcion);
+    }
+
+    public void modificar(String clave) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "UPDATE producto "
+                + "SET cveProducto = ?,"
+                + "nombre = ?,"
+                + "marca = ?,"
+                + "precio = ?,"
+                + "volMedida = ?,"
+                + "SKUProveedor = ?,"
+                + "descripcion = ?"
+                + "WHERE cveProducto = " + clave;
+
+        String nom = Nom.getText();
+        String mar = Mar.getText();
+        String pre = Pre.getText();
+        String vol = (String) Vol.getSelectedItem();
+        String skup = Sku.getText();
+        String des = Des.getText();
+
+        try {
+            PreparedStatement pst = cn.prepareStatement(aSQL);
+            pst.setString(1, clave);
+            pst.setString(2, nom);
+            pst.setString(3, mar);
+            pst.setString(4, pre);
+            pst.setString(5, vol);
+            pst.setString(6, skup);
+            pst.setString(7, des);
+
+            int n = pst.executeUpdate();
+
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -163,6 +210,8 @@ public class modificarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String clave = Cla.getText();
+        modificar(clave);
         Producto p = new Producto();
         p.setVisible(true);
         this.setVisible(false);
