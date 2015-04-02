@@ -197,22 +197,24 @@ public class agregarProveedor extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 30));
 
         GUARDAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        GUARDAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardar.png"))); // NOI18N
         GUARDAR.setText("Guardar");
         GUARDAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GUARDARActionPerformed(evt);
             }
         });
-        getContentPane().add(GUARDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 100, 60));
+        getContentPane().add(GUARDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 290, 130, 60));
 
         CANCELAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        CANCELAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cancelar.png"))); // NOI18N
         CANCELAR.setText("Cerrar");
         CANCELAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CANCELARActionPerformed(evt);
             }
         });
-        getContentPane().add(CANCELAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 290, 90, 60));
+        getContentPane().add(CANCELAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, -1, 60));
 
         jPanel3.setBackground(new java.awt.Color(225, 225, 225));
 

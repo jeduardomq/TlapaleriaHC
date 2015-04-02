@@ -127,8 +127,9 @@ public class Producto extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(45, 45, 45));
-        jLabel3.setText("Buscar:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 60, 30));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/lupa.png"))); // NOI18N
+        jLabel3.setText("Buscar");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 100, 30));
 
         BUSCAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,40 +149,44 @@ public class Producto extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 390, 50));
 
         MODIFICAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        MODIFICAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/actualizar.png"))); // NOI18N
         MODIFICAR.setText("Modificar");
         MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MODIFICARActionPerformed(evt);
             }
         });
-        getContentPane().add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 110, 60));
+        getContentPane().add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 130, 60));
 
         FINALIZAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        FINALIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
         FINALIZAR1.setText("Finalizar");
         FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FINALIZAR1ActionPerformed(evt);
             }
         });
-        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 110, 50));
+        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 130, 50));
 
         ELIMINAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        ELIMINAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cancelar.png"))); // NOI18N
         ELIMINAR.setText("Eliminar");
         ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ELIMINARActionPerformed(evt);
             }
         });
-        getContentPane().add(ELIMINAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 110, 40));
+        getContentPane().add(ELIMINAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 130, 40));
 
         AGREGAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        AGREGAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar.png"))); // NOI18N
         AGREGAR1.setText("Agregar");
         AGREGAR1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AGREGAR1ActionPerformed(evt);
             }
         });
-        getContentPane().add(AGREGAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 110, 80));
+        getContentPane().add(AGREGAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 130, 80));
 
         MODIFICAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
         MODIFICAR1.setText("Modificar");

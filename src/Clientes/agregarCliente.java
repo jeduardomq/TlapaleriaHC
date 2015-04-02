@@ -144,7 +144,7 @@ public class agregarCliente extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(codigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 15, Short.MAX_VALUE))
+                        .addGap(0, 27, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -197,22 +197,24 @@ public class agregarCliente extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 30));
 
         GUARDAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
+        GUARDAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardar.png"))); // NOI18N
         GUARDAR.setText("Guardar");
         GUARDAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GUARDARActionPerformed(evt);
             }
         });
-        getContentPane().add(GUARDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 100, 60));
+        getContentPane().add(GUARDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 290, 130, 60));
 
         CANCELAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
-        CANCELAR.setText("Cerrar");
+        CANCELAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        CANCELAR.setText("Salir");
         CANCELAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CANCELARActionPerformed(evt);
             }
         });
-        getContentPane().add(CANCELAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 290, 90, 60));
+        getContentPane().add(CANCELAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 120, 60));
 
         jPanel3.setBackground(new java.awt.Color(225, 225, 225));
 
