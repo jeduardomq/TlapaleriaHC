@@ -8,9 +8,9 @@ public class Conneccion {
     Connection link;
     PreparedStatement preparar;
         public String bd="tlapaleriahc";
-        public String url="jdbc:mysql://localhost/"+bd;
+//        public String url="jdbc:mysql://localhost/"+bd;
 //        public String url="jdbc:mysql://192.168.1.68/"+bd;
-//        public String url="jdbc:mysql://shift-f6.ddns.net/"+bd;
+        public String url="jdbc:mysql://shift-f6.ddns.net/"+bd;
         public String user="root";
         public String pass="";
 
