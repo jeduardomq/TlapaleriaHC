@@ -1,7 +1,4 @@
-
 package Principal;
-
-import java.awt.Dimension;
 
 public class Main {
 
@@ -11,5 +8,4 @@ public class Main {
         Splash.setLocationRelativeTo(null);
         Splash.setVisible(true);
     }
-    
 }
