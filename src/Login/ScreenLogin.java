@@ -9,7 +9,6 @@ import Database.Conneccion;
 import Database.connectionMySQL;
 import Principal.Principal;
 import java.awt.Color;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
