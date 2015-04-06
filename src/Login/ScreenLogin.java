@@ -54,7 +54,7 @@ public class ScreenLogin extends javax.swing.JFrame {
                 if (nick.equals(nickname) && pass.equals(password)) {
                     JOptionPane.showMessageDialog(this, "Usuario Correcto...!!! ", "Bienvenido", 1);
                     this.setVisible(false);
-                    Principal principal=new Principal();
+                    Principal principal=new Principal(nickname);
                     principal.setVisible(true);
                 }
             }

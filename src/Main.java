@@ -1,4 +1,5 @@
-package Principal;
+
+import Principal.SplashScreen;
 
 public class Main {
 

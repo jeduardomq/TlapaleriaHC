@@ -15,13 +15,20 @@ import Ventas.Venta;
  * @author JuanEduardo
  */
 public class Principal extends javax.swing.JFrame {
-
+String nicknam;
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+
+    public Principal(String nickname) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.nicknam=nickname;
+        USER.setText(nicknam);
     }
 
     /**
@@ -38,11 +45,15 @@ public class Principal extends javax.swing.JFrame {
         CLIENTES = new javax.swing.JButton();
         PRODUCTOS = new javax.swing.JButton();
         VENTAS = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        USER = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -59,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
                 PROVEEDORESActionPerformed(evt);
             }
         });
-        getContentPane().add(PROVEEDORES, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 140, 60));
+        getContentPane().add(PROVEEDORES, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 150, 60));
 
         CLIENTES.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
         CLIENTES.setText("Clientes");
@@ -68,7 +79,7 @@ public class Principal extends javax.swing.JFrame {
                 CLIENTESActionPerformed(evt);
             }
         });
-        getContentPane().add(CLIENTES, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 140, 49));
+        getContentPane().add(CLIENTES, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 150, 49));
 
         PRODUCTOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/producto.png"))); // NOI18N
         PRODUCTOS.setText("Productos");
@@ -77,7 +88,7 @@ public class Principal extends javax.swing.JFrame {
                 PRODUCTOSActionPerformed(evt);
             }
         });
-        getContentPane().add(PRODUCTOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 140, 53));
+        getContentPane().add(PRODUCTOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 150, 53));
 
         VENTAS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/venta.png"))); // NOI18N
         VENTAS.setText("Ventas");
@@ -86,20 +97,43 @@ public class Principal extends javax.swing.JFrame {
                 VENTASActionPerformed(evt);
             }
         });
-        getContentPane().add(VENTAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 140, 47));
+        getContentPane().add(VENTAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 150, 47));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("L O G O");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 90, 70));
+        USER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
+        getContentPane().add(USER, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 50));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("L O G O");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 100, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Screen.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("L O G O");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 100, -1));
+
         jMenu1.setText("Archivo");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        jMenuItem1.setText("Salir");
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Usuarios");
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
+        jMenuItem2.setText("Crear Usuario");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -108,28 +142,34 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PRODUCTOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PRODUCTOSActionPerformed
-        Producto view =new Producto();
+        Producto view = new Producto(nicknam);
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_PRODUCTOSActionPerformed
 
     private void CLIENTESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CLIENTESActionPerformed
-        Cliente view =new Cliente();
+        Cliente view = new Cliente(nicknam);
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_CLIENTESActionPerformed
 
     private void PROVEEDORESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PROVEEDORESActionPerformed
-        Proveedor view =new Proveedor();
+        Proveedor view = new Proveedor(nicknam);
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_PROVEEDORESActionPerformed
 
     private void VENTASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VENTASActionPerformed
-        Venta view =new Venta();
+        Venta view = new Venta(nicknam);
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_VENTASActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ScreenAddUser su = new ScreenAddUser(nicknam);
+        su.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,12 +210,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton CLIENTES;
     private javax.swing.JButton PRODUCTOS;
     private javax.swing.JButton PROVEEDORES;
+    private javax.swing.JLabel USER;
     private javax.swing.JButton VENTAS;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }
