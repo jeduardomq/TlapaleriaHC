@@ -15,7 +15,7 @@ import Ventas.Venta;
  * @author JuanEduardo
  */
 public class Principal extends javax.swing.JFrame {
-String nicknam;
+String nicknam,tip;
     /**
      * Creates new form Principal
      */
@@ -28,6 +28,7 @@ String nicknam;
         initComponents();
         this.setLocationRelativeTo(null);
         this.nicknam=nickname;
+//        this.tip=tipo;
         USER.setText(nicknam);
     }
 
@@ -45,6 +46,8 @@ String nicknam;
         CLIENTES = new javax.swing.JButton();
         PRODUCTOS = new javax.swing.JButton();
         VENTAS = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         USER = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -61,7 +64,7 @@ String nicknam;
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("B I E N V E N I D O");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 600, 30));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 420, 30));
 
         PROVEEDORES.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/proveedor.png"))); // NOI18N
         PROVEEDORES.setText("Proveedores");
@@ -99,13 +102,22 @@ String nicknam;
         });
         getContentPane().add(VENTAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 150, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editar.png"))); // NOI18N
+        jButton1.setText("Editar perfil");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, 60));
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        jButton2.setText("Salir");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 140, 50));
+
         USER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
-        getContentPane().add(USER, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 50));
+        getContentPane().add(USER, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 170, 50));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("L O G O");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 100, -1));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/THC control.png"))); // NOI18N
+        jLabel5.setOpaque(true);
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 180, 100));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Screen.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -212,6 +224,8 @@ String nicknam;
     private javax.swing.JButton PROVEEDORES;
     private javax.swing.JLabel USER;
     private javax.swing.JButton VENTAS;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
