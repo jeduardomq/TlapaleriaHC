@@ -1,6 +1,5 @@
 package Principal;
 
-import Login.ScreenLogin;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.plaf.basic.BasicProgressBarUI;

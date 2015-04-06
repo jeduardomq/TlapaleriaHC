@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Login;
+package Principal;
 
 import Database.Conneccion;
 import Database.connectionMySQL;
@@ -49,13 +49,15 @@ public class ScreenLogin extends javax.swing.JFrame {
             while (rs.next()) {
                 nickname = rs.getString("nickname");
                 password = rs.getString("contraseña");
-                tipo= rs.getString("tipo");
+                tipo = rs.getString("tipo");
 
                 if (nick.equals(nickname) && pass.equals(password)) {
-                    JOptionPane.showMessageDialog(this, "Usuario Correcto...!!! ", "Bienvenido", 1);
+//                    JOptionPane.showMessageDialog(this, "Usuario Correcto...!!! ", "Bienvenido", 1);
                     this.setVisible(false);
-                    Principal principal=new Principal(nickname);
+                    Principal principal = new Principal(nickname);
                     principal.setVisible(true);
+                }else{
+//                    JOptionPane.showMessageDialog(this, "Usuario incorrecto...!!! ", "Usuario incorrecto", 0);
                 }
             }
         } catch (SQLException ex) {

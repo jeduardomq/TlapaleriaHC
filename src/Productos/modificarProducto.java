@@ -44,7 +44,7 @@ public class modificarProducto extends javax.swing.JFrame {
         Cla.setText(clave);
         Nom.setText(nombre);
         Mar.setText(marca);
-        Pre.setText(precio);
+//        Pre.setText(precio);
         Vol.setSelectedItem(volumen);
         Sku.setText(sku);
         Des.setText(descripcion);
@@ -53,19 +53,20 @@ public class modificarProducto extends javax.swing.JFrame {
     public void modificar(String clave) {
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        String aSQL = "UPDATE producto "
-                + "SET cveProducto = ?,"
+        String aSQL = "UPDATE producto SET "
+                + "cveProducto = ?,"
                 + "nombre = ?,"
                 + "marca = ?,"
-                + "precio = ?,"
+                //                + "precio = ?,"
                 + "volMedida = ?,"
                 + "SKUProveedor = ?,"
                 + "descripcion = ?"
                 + "WHERE cveProducto = " + clave;
 
+        clave = Cla.getText();
         String nom = Nom.getText();
         String mar = Mar.getText();
-        String pre = Pre.getText();
+//        String pre = Pre.getText();
         String vol = (String) Vol.getSelectedItem();
         String skup = Sku.getText();
         String des = Des.getText();
@@ -75,10 +76,10 @@ public class modificarProducto extends javax.swing.JFrame {
             pst.setString(1, clave);
             pst.setString(2, nom);
             pst.setString(3, mar);
-            pst.setString(4, pre);
-            pst.setString(5, vol);
-            pst.setString(6, skup);
-            pst.setString(7, des);
+//            pst.setString(4, pre);
+            pst.setString(4, vol);
+            pst.setString(5, skup);
+            pst.setString(6, des);
 
             int n = pst.executeUpdate();
 
@@ -100,14 +101,12 @@ public class modificarProducto extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Nom = new javax.swing.JTextField();
         Mar = new javax.swing.JTextField();
-        Pre = new javax.swing.JTextField();
         Vol = new javax.swing.JComboBox();
         Sku = new javax.swing.JTextField();
         Des = new javax.swing.JTextField();
@@ -136,40 +135,151 @@ public class modificarProducto extends javax.swing.JFrame {
         });
         jPanel2.add(CANCELAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, -1));
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jLabel2.setText("Nombre");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 14, -1, -1));
 
         jLabel3.setText("Marca");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 52, -1, -1));
-
-        jLabel4.setText("Precio");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         jLabel5.setText("Volumen de medida");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 128, -1, -1));
 
         jLabel6.setText("SKUProveedor");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 166, -1, -1));
 
         jLabel7.setText("Descripción");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 204, -1, -1));
 
         jLabel8.setText("Clave");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 242, -1, -1));
-        jPanel1.add(Nom, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 11, 135, -1));
-        jPanel1.add(Mar, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 49, 135, -1));
-        jPanel1.add(Pre, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 87, 135, -1));
 
-        Vol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Litros", "Metros", "Kilos" }));
-        jPanel1.add(Vol, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 125, 126, -1));
-        jPanel1.add(Sku, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 163, 126, -1));
-        jPanel1.add(Des, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 201, 135, -1));
+        Nom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NomActionPerformed(evt);
+            }
+        });
+        Nom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NomKeyTyped(evt);
+            }
+        });
 
-        Cla.setEditable(false);
-        Cla.setEnabled(false);
-        jPanel1.add(Cla, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 239, 135, -1));
+        Mar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MarActionPerformed(evt);
+            }
+        });
+        Mar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                MarKeyTyped(evt);
+            }
+        });
+
+        Vol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pieza", "Litros", "Metros", "Kilos" }));
+
+        Sku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SkuActionPerformed(evt);
+            }
+        });
+        Sku.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                SkuKeyTyped(evt);
+            }
+        });
+
+        Des.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DesActionPerformed(evt);
+            }
+        });
+        Des.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DesKeyTyped(evt);
+            }
+        });
+
+        Cla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClaActionPerformed(evt);
+            }
+        });
+        Cla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ClaKeyTyped(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(56, 56, 56)
+                        .addComponent(Des))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addGap(18, 18, 18))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(81, 81, 81)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(73, 73, 73)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(41, 41, 41)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(83, 83, 83)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Sku)
+                            .addComponent(Nom)
+                            .addComponent(Mar)
+                            .addComponent(Vol, 0, 126, Short.MAX_VALUE)
+                            .addComponent(Cla))))
+                .addGap(9, 9, 9))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(21, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Cla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2))
+                    .addComponent(Nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addComponent(Mar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(Vol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(Sku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(Des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(82, 82, 82))
+        );
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -179,15 +289,15 @@ public class modificarProducto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(66, 66, 66))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,10 +305,12 @@ public class modificarProducto extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         pack();
@@ -220,6 +332,62 @@ public class modificarProducto extends javax.swing.JFrame {
         p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MODIFICARActionPerformed
+
+    private void ClaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ClaKeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (Cla.getText().length() == 11) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_ClaKeyTyped
+
+    private void NomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NomKeyTyped
+        if (Nom.getText().length() == 18) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_NomKeyTyped
+
+    private void MarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MarKeyTyped
+        if (Mar.getText().length() == 18) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_MarKeyTyped
+
+    private void SkuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SkuKeyTyped
+        if (Sku.getText().length() == 18) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_SkuKeyTyped
+
+    private void DesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DesKeyTyped
+        if (Des.getText().length() == 18) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_DesKeyTyped
+
+    private void ClaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClaActionPerformed
+        Cla.transferFocus();
+    }//GEN-LAST:event_ClaActionPerformed
+
+    private void NomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NomActionPerformed
+        Nom.transferFocus();
+    }//GEN-LAST:event_NomActionPerformed
+
+    private void MarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MarActionPerformed
+        Mar.transferFocus();
+    }//GEN-LAST:event_MarActionPerformed
+
+    private void SkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SkuActionPerformed
+        Sku.transferFocus();
+    }//GEN-LAST:event_SkuActionPerformed
+
+    private void DesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesActionPerformed
+        Des.transferFocus();
+    }//GEN-LAST:event_DesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,12 +432,10 @@ public class modificarProducto extends javax.swing.JFrame {
     private javax.swing.JButton MODIFICAR;
     private javax.swing.JTextField Mar;
     private javax.swing.JTextField Nom;
-    private javax.swing.JTextField Pre;
     private javax.swing.JTextField Sku;
     private javax.swing.JComboBox Vol;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

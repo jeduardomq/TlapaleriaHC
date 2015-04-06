@@ -44,13 +44,13 @@ String nicknam;
     }
 
     public void cargartabla(String valor) {
-        String[] titulos = {"Clave", "Nombre", "Marca", "Precio", "Unidad de Medida", "SKUProv", "Descripcion"};
-        String[] registro = new String[7];
+        String[] titulos = {"Clave", "Nombre", "Marca", "Unidad de Medida", "SKUProv", "Descripcion"};
+        String[] registro = new String[6];
         String aSQL = "";
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        aSQL = "SELECT cveProducto, nombre, marca, precio, volMedida, SKUProveedor, descripcion FROM Producto "
+        aSQL = "SELECT cveProducto, nombre, marca, volMedida, SKUProveedor, descripcion FROM Producto "
                 + "WHERE nombre LIKE '%" + valor + "%'";
         try {
             Statement st = cn.createStatement();
@@ -59,10 +59,10 @@ String nicknam;
                 registro[0] = rs.getString("cveProducto");
                 registro[1] = rs.getString("nombre");
                 registro[2] = rs.getString("marca");
-                registro[3] = rs.getString("precio");
-                registro[4] = rs.getString("volMedida");
-                registro[5] = rs.getString("SKUProveedor");
-                registro[6] = rs.getString("descripcion");
+//                registro[3] = rs.getString("precio");
+                registro[3] = rs.getString("volMedida");
+                registro[4] = rs.getString("SKUProveedor");
+                registro[5] = rs.getString("descripcion");
 
                 modelo.addRow(registro);
             }
@@ -264,11 +264,11 @@ String nicknam;
             String clave = tabla.getValueAt(fila, 0).toString();
             String nombre= tabla.getValueAt(fila, 1).toString();
             String marca = tabla.getValueAt(fila, 2).toString();
-            String precio = tabla.getValueAt(fila, 3).toString();
-            String volumen = tabla.getValueAt(fila,4).toString();
-            String sku = tabla.getValueAt(fila, 5).toString();
-            String descripcion = tabla.getValueAt(fila, 6).toString();
-            modificarProducto mp = new modificarProducto(clave,nombre, marca, precio, volumen, sku, descripcion);
+//            String precio = tabla.getValueAt(fila, 3).toString();
+            String volumen = tabla.getValueAt(fila,3).toString();
+            String sku = tabla.getValueAt(fila, 4).toString();
+            String descripcion = tabla.getValueAt(fila, 5).toString();
+            modificarProducto mp = new modificarProducto(clave,nombre, marca, "precio", volumen, sku, descripcion);
             mp.setVisible(true);
             this.setVisible(false);
         }

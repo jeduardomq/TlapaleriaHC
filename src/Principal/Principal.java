@@ -9,13 +9,16 @@ import Clientes.Cliente;
 import Productos.Producto;
 import Proveedores.Proveedor;
 import Ventas.Venta;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author JuanEduardo
  */
 public class Principal extends javax.swing.JFrame {
-String nicknam,tip;
+
+    String nicknam, tip;
+
     /**
      * Creates new form Principal
      */
@@ -27,7 +30,7 @@ String nicknam,tip;
     public Principal(String nickname) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.nicknam=nickname;
+        this.nicknam = nickname;
 //        this.tip=tipo;
         USER.setText(nicknam);
     }
@@ -46,8 +49,8 @@ String nicknam,tip;
         CLIENTES = new javax.swing.JButton();
         PRODUCTOS = new javax.swing.JButton();
         VENTAS = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        EDITAR = new javax.swing.JButton();
+        SALIR = new javax.swing.JButton();
         USER = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -61,10 +64,12 @@ String nicknam,tip;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setBackground(new java.awt.Color(51, 51, 255));
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("B I E N V E N I D O");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 420, 30));
+        jLabel1.setOpaque(true);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 420, 100));
 
         PROVEEDORES.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/proveedor.png"))); // NOI18N
         PROVEEDORES.setText("Proveedores");
@@ -102,13 +107,23 @@ String nicknam,tip;
         });
         getContentPane().add(VENTAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 150, 47));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editar.png"))); // NOI18N
-        jButton1.setText("Editar perfil");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, 60));
+        EDITAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editar.png"))); // NOI18N
+        EDITAR.setText("Editar perfil");
+        EDITAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EDITARActionPerformed(evt);
+            }
+        });
+        getContentPane().add(EDITAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 150, 60));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
-        jButton2.setText("Salir");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 140, 50));
+        SALIR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        SALIR.setText("Salir");
+        SALIR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SALIRActionPerformed(evt);
+            }
+        });
+        getContentPane().add(SALIR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 150, 50));
 
         USER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
         getContentPane().add(USER, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 170, 50));
@@ -183,6 +198,21 @@ String nicknam,tip;
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void SALIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SALIRActionPerformed
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro?", "Alerta!", JOptionPane.YES_NO_OPTION);
+        if (JOptionPane.YES_NO_OPTION == resp) {
+            System.exit(0);
+        } else {
+            System.out.println("CANCELAR");
+        }
+    }//GEN-LAST:event_SALIRActionPerformed
+
+    private void EDITARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EDITARActionPerformed
+        ScreenAddUser su = new ScreenAddUser(nicknam);
+        su.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_EDITARActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -220,12 +250,12 @@ String nicknam,tip;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CLIENTES;
+    private javax.swing.JButton EDITAR;
     private javax.swing.JButton PRODUCTOS;
     private javax.swing.JButton PROVEEDORES;
+    private javax.swing.JButton SALIR;
     private javax.swing.JLabel USER;
     private javax.swing.JButton VENTAS;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

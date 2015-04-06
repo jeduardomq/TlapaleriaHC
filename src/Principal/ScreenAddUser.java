@@ -20,12 +20,15 @@ public class ScreenAddUser extends javax.swing.JFrame {
     public ScreenAddUser() {
         initComponents();
         this.setLocationRelativeTo(null);
+        nick.setText(nickname);
     }
 
     ScreenAddUser(String nicknam) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.nickname = nicknam;
+        nick.setText(nickname);
+        
     }
 
     public boolean comparar() {
@@ -61,6 +64,14 @@ public class ScreenAddUser extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+    }
+
+    public void bloquear() {
+        nick.setFocusable(false);
+        rol.setFocusable(false);
+        rol.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setText("Modificar Contraseña");
     }
 
     @SuppressWarnings("unchecked")
@@ -216,10 +227,11 @@ public class ScreenAddUser extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(REGISTRAR)
-                    .addComponent(LIMPIAR)
-                    .addComponent(mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(REGISTRAR)
+                        .addComponent(LIMPIAR)))
                 .addContainerGap())
         );
 
@@ -274,10 +286,11 @@ public class ScreenAddUser extends javax.swing.JFrame {
         nick.setText("");
         pass1.setText("");
         pass2.setText("");
+        bloquear();
     }//GEN-LAST:event_LIMPIARActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Principal view=new Principal();
+        Principal view = new Principal();
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
