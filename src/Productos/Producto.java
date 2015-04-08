@@ -44,25 +44,26 @@ String nicknam;
     }
 
     public void cargartabla(String valor) {
-        String[] titulos = {"Clave", "Nombre", "Marca", "Unidad de Medida", "SKUProv", "Descripcion"};
-        String[] registro = new String[6];
+        String[] titulos = {"cveProducto","Proveedor","Nombre","Descripcion", "Marca", "Precio", "Medida","Categoria"};
+        String[] registro = new String[8];
         String aSQL = "";
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        aSQL = "SELECT cveProducto, nombre, marca, volMedida, SKUProveedor, descripcion FROM Producto "
+        aSQL = "SELECT cveProducto,cveProveedor,nombre,descripcion, marca, precioCompra, medida,categoria FROM Producto "
                 + "WHERE nombre LIKE '%" + valor + "%'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
                 registro[0] = rs.getString("cveProducto");
-                registro[1] = rs.getString("nombre");
-                registro[2] = rs.getString("marca");
-//                registro[3] = rs.getString("precio");
-                registro[3] = rs.getString("volMedida");
-                registro[4] = rs.getString("SKUProveedor");
-                registro[5] = rs.getString("descripcion");
+                registro[1] = rs.getString("cveProveedor");               
+                registro[2] = rs.getString("nombre");
+                registro[3] = rs.getString("descripcion");
+                registro[4] = rs.getString("marca");
+                registro[5] = rs.getString("precioCompra");
+                registro[6] = rs.getString("medida");
+                registro[7] = rs.getString("categoria");
 
                 modelo.addRow(registro);
             }
@@ -98,12 +99,14 @@ String nicknam;
         ELIMINAR = new javax.swing.JButton();
         AGREGAR1 = new javax.swing.JButton();
         MODIFICAR1 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        BUSCAR = new javax.swing.JTextField();
-        USER = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        USER = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        BUSCAR = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -127,7 +130,7 @@ String nicknam;
 
         getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 660, 270));
 
-        MODIFICAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        MODIFICAR.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
         MODIFICAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/actualizar.png"))); // NOI18N
         MODIFICAR.setText("Modificar");
         MODIFICAR.addActionListener(new java.awt.event.ActionListener() {
@@ -135,9 +138,9 @@ String nicknam;
                 MODIFICARActionPerformed(evt);
             }
         });
-        getContentPane().add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 130, 60));
+        getContentPane().add(MODIFICAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 230, 140, 60));
 
-        FINALIZAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        FINALIZAR1.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
         FINALIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
         FINALIZAR1.setText("Finalizar");
         FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
@@ -145,9 +148,9 @@ String nicknam;
                 FINALIZAR1ActionPerformed(evt);
             }
         });
-        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, 130, 50));
+        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 370, 140, 50));
 
-        ELIMINAR.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        ELIMINAR.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
         ELIMINAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cancelar.png"))); // NOI18N
         ELIMINAR.setText("Eliminar");
         ELIMINAR.addActionListener(new java.awt.event.ActionListener() {
@@ -155,9 +158,9 @@ String nicknam;
                 ELIMINARActionPerformed(evt);
             }
         });
-        getContentPane().add(ELIMINAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 130, 40));
+        getContentPane().add(ELIMINAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 300, 140, 40));
 
-        AGREGAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        AGREGAR1.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
         AGREGAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar.png"))); // NOI18N
         AGREGAR1.setText("Agregar");
         AGREGAR1.addActionListener(new java.awt.event.ActionListener() {
@@ -165,22 +168,40 @@ String nicknam;
                 AGREGAR1ActionPerformed(evt);
             }
         });
-        getContentPane().add(AGREGAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 130, 80));
+        getContentPane().add(AGREGAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 140, 80));
 
-        MODIFICAR1.setFont(new java.awt.Font("Open Sans", 0, 15)); // NOI18N
+        MODIFICAR1.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
         MODIFICAR1.setText("Modificar");
         MODIFICAR1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MODIFICAR1ActionPerformed(evt);
             }
         });
-        getContentPane().add(MODIFICAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 110, 60));
+        getContentPane().add(MODIFICAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 230, 120, 60));
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel4.setBackground(new java.awt.Color(255, 73, 72));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/lupa.png"))); // NOI18N
-        jLabel3.setText("Buscar");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Producto");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
+
+        USER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
+        jPanel4.add(USER, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 170, 50));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/THC control.png"))); // NOI18N
+        jLabel8.setOpaque(true);
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, -1, 100));
+
+        jPanel2.setBackground(new java.awt.Color(255, 73, 72));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/lupa.png"))); // NOI18N
+        jLabel4.setText("Buscar");
 
         BUSCAR.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -196,33 +217,29 @@ String nicknam;
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(BUSCAR, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BUSCAR, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BUSCAR, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(BUSCAR, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
-        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 390, 50));
+        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 260, 60));
 
-        USER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
-        jPanel3.add(USER, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 50));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 100));
 
-        jLabel7.setBackground(new java.awt.Color(204, 204, 255));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/THC control.png"))); // NOI18N
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 170, 120));
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 130));
+        jLabel1.setBackground(new java.awt.Color(102, 102, 102));
+        jLabel1.setOpaque(true);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 440));
 
         jMenu1.setText("Archivo");
 
@@ -262,13 +279,15 @@ String nicknam;
         int fila = tabla.getSelectedRow();
         if (fila >= 0) {
             String clave = tabla.getValueAt(fila, 0).toString();
-            String nombre= tabla.getValueAt(fila, 1).toString();
-            String marca = tabla.getValueAt(fila, 2).toString();
-//            String precio = tabla.getValueAt(fila, 3).toString();
-            String volumen = tabla.getValueAt(fila,3).toString();
-            String sku = tabla.getValueAt(fila, 4).toString();
-            String descripcion = tabla.getValueAt(fila, 5).toString();
-            modificarProducto mp = new modificarProducto(clave,nombre, marca, "precio", volumen, sku, descripcion);
+            String prov = tabla.getValueAt(fila, 1).toString();
+            String nombre= tabla.getValueAt(fila, 2).toString();
+            String descripcion = tabla.getValueAt(fila, 3).toString();
+            String marca = tabla.getValueAt(fila, 4).toString();
+            String precio = tabla.getValueAt(fila, 5).toString();
+            String volumen = tabla.getValueAt(fila,6).toString();
+            String cat = tabla.getValueAt(fila, 7).toString();
+            
+            modificarProducto mp = new modificarProducto(clave,prov,nombre,descripcion,marca,precio,volumen,cat);
             mp.setVisible(true);
             this.setVisible(false);
         }
@@ -341,13 +360,15 @@ String nicknam;
     private javax.swing.JButton MODIFICAR;
     private javax.swing.JButton MODIFICAR1;
     private javax.swing.JLabel USER;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
