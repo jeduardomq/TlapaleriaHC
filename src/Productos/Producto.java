@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Productos;
 
 import Database.Conneccion;
@@ -15,27 +10,20 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author SWO
- */
 public class Producto extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
-String nicknam;
-    /**
-     * Creates new form Principal
-     */
+    String nicknam;
+
     public Producto() {
         initComponents();
 //        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         cargartabla("");
-
     }
 
     public Producto(String nickname) {
-                initComponents();
+        initComponents();
 //        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         cargartabla("");
@@ -44,7 +32,7 @@ String nicknam;
     }
 
     public void cargartabla(String valor) {
-        String[] titulos = {"cveProducto","Proveedor","Nombre","Descripcion", "Marca", "Precio", "Medida","Categoria"};
+        String[] titulos = {"cveProducto", "Proveedor", "Nombre", "Descripcion", "Marca", "Precio", "Medida", "Categoria"};
         String[] registro = new String[8];
         String aSQL = "";
         modelo = new DefaultTableModel(null, titulos);
@@ -57,7 +45,7 @@ String nicknam;
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
                 registro[0] = rs.getString("cveProducto");
-                registro[1] = rs.getString("cveProveedor");               
+                registro[1] = rs.getString("cveProveedor");
                 registro[2] = rs.getString("nombre");
                 registro[3] = rs.getString("descripcion");
                 registro[4] = rs.getString("marca");
@@ -254,8 +242,6 @@ String nicknam;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
- 
-
 
     private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
         Principal view = new Principal(nicknam);
@@ -280,14 +266,14 @@ String nicknam;
         if (fila >= 0) {
             String clave = tabla.getValueAt(fila, 0).toString();
             String prov = tabla.getValueAt(fila, 1).toString();
-            String nombre= tabla.getValueAt(fila, 2).toString();
+            String nombre = tabla.getValueAt(fila, 2).toString();
             String descripcion = tabla.getValueAt(fila, 3).toString();
             String marca = tabla.getValueAt(fila, 4).toString();
             String precio = tabla.getValueAt(fila, 5).toString();
-            String volumen = tabla.getValueAt(fila,6).toString();
+            String volumen = tabla.getValueAt(fila, 6).toString();
             String cat = tabla.getValueAt(fila, 7).toString();
-            
-            modificarProducto mp = new modificarProducto(clave,prov,nombre,descripcion,marca,precio,volumen,cat);
+
+            modificarProducto mp = new modificarProducto(clave, prov, nombre, descripcion, marca, precio, volumen, cat);
             mp.setVisible(true);
             this.setVisible(false);
         }

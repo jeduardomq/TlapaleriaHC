@@ -41,6 +41,12 @@ public class modificarProducto extends javax.swing.JFrame {
         precioC3.setEnabled(false);
         precioC4.setEnabled(false);
         precioC5.setEnabled(false);
+        
+        porcentajes1(clav, "1");
+        porcentajes2(clav, "2");
+        porcentajes3(clav, "3");
+        porcentajes4(clav, "4");
+        porcentajes5(clav, "5");
     }
 
     public modificarProducto() {
@@ -54,6 +60,91 @@ public class modificarProducto extends javax.swing.JFrame {
         precioC3.setEnabled(false);
         precioC4.setEnabled(false);
         precioC5.setEnabled(false);
+        porcentajes1("", "");
+        porcentajes2("", "");
+        porcentajes3("", "");
+        porcentajes4("", "");
+        porcentajes5("", "");
+    }
+
+    public void porcentajes1(String clav, String id) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
+                + "WHERE cveProducto = '" + clav + "' && idPrecio='" + id + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                precioC1.setText(rs.getString("porcentaje"));
+            }
+        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void porcentajes2(String clav, String id) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+                String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
+                + "WHERE cveProducto = '" + clav + "' && idPrecio='" + id + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                precioC2.setText(rs.getString("porcentaje"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void porcentajes3(String clav, String id) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
+                + "WHERE cveProducto = '" + clav + "' && idPrecio='" + id + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                precioC3.setText(rs.getString("porcentaje"));
+            }
+        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void porcentajes4(String clav, String id) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
+                + "WHERE cveProducto = '" + clav + "' && idPrecio='" + id + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                precioC4.setText(rs.getString("porcentaje"));
+            }
+        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void porcentajes5(String clav, String id) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
+                + "WHERE cveProducto = '" + clav + "' && idPrecio='" + id + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                precioC5.setText(rs.getString("porcentaje"));
+            }
+        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, ex);
+        }
     }
 
     public void llenarDatos() {
@@ -79,7 +170,7 @@ public class modificarProducto extends javax.swing.JFrame {
                 + "precioCompra=?, "
                 + "medida=?,"
                 + "categoria=?"
-                + "WHERE cveProducto = " + clave;
+                + "WHERE cveProducto = '" + clave+"'";
         String claves = Cla.getText();
         String skus = Sku.getText();
         String nombres = nom.getText();
@@ -104,6 +195,32 @@ public class modificarProducto extends javax.swing.JFrame {
 
             if (n > 0) {
                 JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    public void modificarPorcentaje(String clave, String porcentaje, String id, String descripcion) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "UPDATE detprecio SET "
+                + "cveProducto=?, "
+                + "porcentaje=?, "
+                + "idPrecio=?, "
+                + "descripcion=? "
+                + "WHERE cveProducto = '" + clave+"' && idPrecio = '" + id+"'";
+        try {
+            PreparedStatement pst = cn.prepareStatement(aSQL);
+            pst.setString(1, clave);
+            pst.setString(2, porcentaje);
+            pst.setString(3, id);
+            pst.setString(4, descripcion);
+
+            int n = pst.executeUpdate();
+
+            if (n > 0) {
+//                JOptionPane.showMessageDialog(null, "Modificacion Correcta");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -370,6 +487,7 @@ public class modificarProducto extends javax.swing.JFrame {
         });
 
         precioC1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC1.setText("0");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -380,24 +498,28 @@ public class modificarProducto extends javax.swing.JFrame {
         jLabel2.setText("%");
 
         precioC2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC2.setText("0");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("%");
 
         precioC3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC3.setText("0");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("%");
 
         precioC4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC4.setText("0");
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("%");
 
         precioC5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC5.setText("0");
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -601,8 +723,25 @@ public class modificarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_CANCELARActionPerformed
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
-        String clave = Cla.getText();
-        modificar(clave);
+        String cla = Cla.getText();
+        modificar(cla);
+        String precio1 = precioC1.getText();
+        String precio2 = precioC2.getText();
+        String precio3 = precioC3.getText();
+        String precio4 = precioC4.getText();
+        String precio5 = precioC5.getText();
+        String descrip1 = "Precio a Mayoreo";
+        String descrip2 = "Precio a Publico en General";
+        String descrip3 = "Precio a Publico en General con descuento";
+        String descrip4 = "Precio a Menudeo";
+        String descrip5 = "Precio a Especial";
+
+        modificarPorcentaje(cla, precio1, "1", descrip1);
+        modificarPorcentaje(cla, precio2, "2", descrip2);
+        modificarPorcentaje(cla, precio3, "3", descrip3);
+        modificarPorcentaje(cla, precio4, "4", descrip4);
+        modificarPorcentaje(cla, precio5, "5", descrip5);
+
         Producto p = new Producto();
         p.setVisible(true);
         this.setVisible(false);

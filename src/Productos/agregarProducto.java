@@ -41,6 +41,11 @@ public class agregarProducto extends javax.swing.JFrame {
         precio.setText("");
         SkuProveedor.setText("");
         descripcion.setText("");
+        precioC1.setText("");
+        precioC2.setText("");
+        precioC3.setText("");
+        precioC4.setText("");
+        precioC5.setText("");
     }
 
     public void insert() {
@@ -74,6 +79,28 @@ public class agregarProducto extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void insertPorcentaje(String clave, String porcentaje, String id, String descripcion) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+
+        String aSQL = "INSERT INTO detprecio (cveProducto,porcentaje,idPrecio,descripcion)"
+                + "VALUES( ?, ?, ?, ?)";
+        try {
+            PreparedStatement pst = cn.prepareStatement(aSQL);
+            pst.setString(1, clave);
+            pst.setString(2, porcentaje+"");
+            pst.setString(3, id);
+            pst.setString(4, descripcion);
+
+            int n = pst.executeUpdate();
+            if (n > 0) {
+//                JOptionPane.showMessageDialog(null, "Los datos se guardaron Correctamente");
+            }
+        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
@@ -362,6 +389,12 @@ public class agregarProducto extends javax.swing.JFrame {
         });
 
         precioC1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC1.setText("0");
+        precioC1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precioC1ActionPerformed(evt);
+            }
+        });
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
@@ -372,24 +405,28 @@ public class agregarProducto extends javax.swing.JFrame {
         jLabel2.setText("%");
 
         precioC2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC2.setText("0");
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("%");
 
         precioC3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC3.setText("0");
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setText("%");
 
         precioC4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC4.setText("0");
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setText("%");
 
         precioC5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC5.setText("0");
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -643,7 +680,29 @@ public class agregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreKeyTyped
 
     private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
+        String cla = Cla.getText();
+        String precio1 = precioC1.getText();
+        String precio2 = precioC2.getText();
+        String precio3 = precioC3.getText();
+        String precio4 = precioC4.getText();
+        String precio5 = precioC5.getText();
+        String id1 = "1";
+        String id2 = "2";
+        String id3 = "3";
+        String id4 = "4";
+        String id5 = "5";
+        String descrip1 = "Precio a Mayoreo";
+        String descrip2 = "Precio a Publico en General";
+        String descrip3 = "Precio a Publico en General con descuento";
+        String descrip4 = "Precio a Menudeo";
+        String descrip5 = "Precio a Especial";
+
         insert();
+        insertPorcentaje(cla, precio1, id1, descrip1);
+        insertPorcentaje(cla, precio2, id2, descrip2);
+        insertPorcentaje(cla, precio3, id3, descrip3);
+        insertPorcentaje(cla, precio4, id4, descrip4);
+        insertPorcentaje(cla, precio5, id5, descrip5);
         limpiarDatos();
         //        Producto p = new Producto();
         //        p.setVisible(true);
@@ -678,6 +737,10 @@ public class agregarProducto extends javax.swing.JFrame {
     private void precio5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio5ActionPerformed
         checks();
     }//GEN-LAST:event_precio5ActionPerformed
+
+    private void precioC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioC1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precioC1ActionPerformed
 
     /**
      * @param args the command line arguments
