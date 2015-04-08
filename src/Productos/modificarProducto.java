@@ -8,7 +8,9 @@ package Productos;
 import Database.Conneccion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,14 +33,27 @@ public class modificarProducto extends javax.swing.JFrame {
         this.precioo = preci;
         this.volumen = volume;
         this.cat = ca;
-
+        categoria();
+        unidadMed();
         llenarDatos();
+        precioC1.setEnabled(false);
+        precioC2.setEnabled(false);
+        precioC3.setEnabled(false);
+        precioC4.setEnabled(false);
+        precioC5.setEnabled(false);
     }
 
     public modificarProducto() {
         initComponents();
         this.setLocationRelativeTo(null);
+        categoria();
+        unidadMed();
         llenarDatos();
+        precioC1.setEnabled(false);
+        precioC2.setEnabled(false);
+        precioC3.setEnabled(false);
+        precioC4.setEnabled(false);
+        precioC5.setEnabled(false);
     }
 
     public void llenarDatos() {
@@ -95,6 +110,64 @@ public class modificarProducto extends javax.swing.JFrame {
         }
     }
 
+    public void categoria() {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT nombreCategoria FROM Categoria ";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                categoria.addItem(rs.getString("nombreCategoria"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void unidadMed() {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT tipoMedida FROM medidaproducto ";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                volmedida.addItem(rs.getString("tipoMedida"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void checks() {
+        if (precio1.isSelected() == true) {
+            precioC1.setEnabled(true);
+        } else {
+            precioC1.setEnabled(false);
+        }
+        if (precio2.isSelected() == true) {
+            precioC2.setEnabled(true);
+        } else {
+            precioC2.setEnabled(false);
+        }
+        if (precio3.isSelected() == true) {
+            precioC3.setEnabled(true);
+        } else {
+            precioC3.setEnabled(false);
+        }
+        if (precio4.isSelected() == true) {
+            precioC4.setEnabled(true);
+        } else {
+            precioC4.setEnabled(false);
+        }
+        if (precio5.isSelected() == true) {
+            precioC5.setEnabled(true);
+        } else {
+            precioC5.setEnabled(false);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -116,21 +189,21 @@ public class modificarProducto extends javax.swing.JFrame {
         Sku = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         nom = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
+        precio1 = new javax.swing.JCheckBox();
+        precio2 = new javax.swing.JCheckBox();
+        precio3 = new javax.swing.JCheckBox();
+        precio4 = new javax.swing.JCheckBox();
+        precio5 = new javax.swing.JCheckBox();
+        precioC1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        precioC2 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        precioC3 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        precioC4 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        precioC5 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         MODIFICAR = new javax.swing.JButton();
         CANCELAR = new javax.swing.JButton();
@@ -138,6 +211,7 @@ public class modificarProducto extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Modificar Producto");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -199,7 +273,6 @@ public class modificarProducto extends javax.swing.JFrame {
         jLabel5.setText("Unidad de medida:");
 
         volmedida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        volmedida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pieza", "Litros", "Metros", "Kilos" }));
         volmedida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 volmedidaActionPerformed(evt);
@@ -214,7 +287,6 @@ public class modificarProducto extends javax.swing.JFrame {
         });
 
         categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        categoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Plomería", "Carpintería", "Pintura", "Electronica" }));
         categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoriaActionPerformed(evt);
@@ -257,22 +329,47 @@ public class modificarProducto extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Mayoreo");
+        precio1.setForeground(new java.awt.Color(255, 255, 255));
+        precio1.setText("Mayoreo");
+        precio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precio1ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox2.setText("Publico General");
+        precio2.setForeground(new java.awt.Color(255, 255, 255));
+        precio2.setText("Publico General");
+        precio2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precio2ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox3.setText("Descuento");
+        precio3.setForeground(new java.awt.Color(255, 255, 255));
+        precio3.setText("Descuento");
+        precio3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precio3ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox4.setText("Menudeo");
+        precio4.setForeground(new java.awt.Color(255, 255, 255));
+        precio4.setText("Menudeo");
+        precio4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precio4ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox5.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox5.setText("Especial");
+        precio5.setForeground(new java.awt.Color(255, 255, 255));
+        precio5.setText("Especial");
+        precio5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precio5ActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,25 +379,25 @@ public class modificarProducto extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("%");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("%");
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("%");
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("%");
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precioC5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -369,34 +466,34 @@ public class modificarProducto extends javax.swing.JFrame {
                 .addComponent(Sku, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jCheckBox1)
+                .addComponent(precio1)
                 .addGap(10, 10, 10)
-                .addComponent(jCheckBox2)
+                .addComponent(precio2)
                 .addGap(10, 10, 10)
-                .addComponent(jCheckBox3)
+                .addComponent(precio3)
                 .addGap(10, 10, 10)
-                .addComponent(jCheckBox4)
+                .addComponent(precio4)
                 .addGap(10, 10, 10)
-                .addComponent(jCheckBox5))
+                .addComponent(precio5))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precioC1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precioC2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel2)
                 .addGap(21, 21, 21)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precioC3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel12)
                 .addGap(20, 20, 20)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precioC4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precioC5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel14))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -440,18 +537,18 @@ public class modificarProducto extends javax.swing.JFrame {
                     .addComponent(jLabel10))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox5))
+                    .addComponent(precio1)
+                    .addComponent(precio2)
+                    .addComponent(precio3)
+                    .addComponent(precio4)
+                    .addComponent(precio5))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(precioC1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(precioC2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(precioC3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(precioC4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(precioC5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,6 +674,26 @@ public class modificarProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nomKeyTyped
 
+    private void precio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio1ActionPerformed
+        checks();
+    }//GEN-LAST:event_precio1ActionPerformed
+
+    private void precio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio2ActionPerformed
+        checks();
+    }//GEN-LAST:event_precio2ActionPerformed
+
+    private void precio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio3ActionPerformed
+        checks();
+    }//GEN-LAST:event_precio3ActionPerformed
+
+    private void precio4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio4ActionPerformed
+        checks();
+    }//GEN-LAST:event_precio4ActionPerformed
+
+    private void precio5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio5ActionPerformed
+        checks();
+    }//GEN-LAST:event_precio5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -620,11 +737,6 @@ public class modificarProducto extends javax.swing.JFrame {
     private javax.swing.JTextField Sku;
     private javax.swing.JComboBox categoria;
     private javax.swing.JTextField descripcion;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -642,14 +754,19 @@ public class modificarProducto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField mar;
     private javax.swing.JTextField nom;
     private javax.swing.JTextField precio;
+    private javax.swing.JCheckBox precio1;
+    private javax.swing.JCheckBox precio2;
+    private javax.swing.JCheckBox precio3;
+    private javax.swing.JCheckBox precio4;
+    private javax.swing.JCheckBox precio5;
+    private javax.swing.JTextField precioC1;
+    private javax.swing.JTextField precioC2;
+    private javax.swing.JTextField precioC3;
+    private javax.swing.JTextField precioC4;
+    private javax.swing.JTextField precioC5;
     private javax.swing.JComboBox volmedida;
     // End of variables declaration//GEN-END:variables
 }

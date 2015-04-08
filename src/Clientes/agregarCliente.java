@@ -115,6 +115,7 @@ public class agregarCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Agregar Cliente");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         GUARDAR.setFont(new java.awt.Font("Open Sans", 0, 16)); // NOI18N

@@ -6,7 +6,6 @@
 package Principal;
 
 import Database.Conneccion;
-import Database.connectionMySQL;
 import Principal.Principal;
 import java.awt.Color;
 import java.sql.Connection;
@@ -22,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class ScreenLogin extends javax.swing.JFrame {
 
-    connectionMySQL conectionSGDB;
+    Conneccion conectionSGDB;
     ImageIcon unlock;
     ImageIcon lock;
 
