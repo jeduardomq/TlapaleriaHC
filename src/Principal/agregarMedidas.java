@@ -125,6 +125,11 @@ public class agregarMedidas extends javax.swing.JFrame {
         ELIMINAR = new javax.swing.JButton();
         FINALIZAR1 = new javax.swing.JButton();
         MODIFICAR1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Unidades de Medida");
@@ -232,6 +237,29 @@ public class agregarMedidas extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 481));
 
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        jMenuItem1.setText("Salir");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Usuarios");
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente.png"))); // NOI18N
+        jMenuItem2.setText("Crear Usuario");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -265,8 +293,8 @@ public class agregarMedidas extends javax.swing.JFrame {
     }//GEN-LAST:event_ELIMINARActionPerformed
 
     private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
-        Principal view = new Principal("nicknam");
-        view.setVisible(true);
+//        Principal view = new Principal("nicknam");
+//        view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_FINALIZAR1ActionPerformed
 
@@ -279,6 +307,12 @@ public class agregarMedidas extends javax.swing.JFrame {
             GUARDAR.setVisible(true);
         }
     }//GEN-LAST:event_MODIFICAR1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ScreenAddUser su = new ScreenAddUser();
+        su.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,6 +361,11 @@ public class agregarMedidas extends javax.swing.JFrame {
     private javax.swing.JTextField catt;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane5;
