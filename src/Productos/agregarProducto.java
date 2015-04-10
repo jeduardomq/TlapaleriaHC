@@ -3,8 +3,9 @@ package Productos;
 
 import Database.Conneccion;
 import Principal.ScreenAddUser;
-import Principal.agregarCategoria;
-import Principal.agregarMedidas;
+import Ajustes.agregarCategoria;
+import Ajustes.agregarMedidas;
+import Inventarios.Inventario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -157,6 +158,28 @@ public class agregarProducto extends javax.swing.JFrame {
         }
     }
 
+        public void insertInventario() {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String cla = Cla.getText();
+
+        String aSQL = "INSERT INTO Inventario (cveProducto,cantidad,stockMinimo)"
+                + "VALUES( ?, ?, ?)";
+        try {
+            PreparedStatement pst = cn.prepareStatement(aSQL);
+            pst.setString(1, cla);
+            pst.setString(2, "0");
+            pst.setString(3, "0");
+
+            int n = pst.executeUpdate();
+            if (n > 0) {
+//                JOptionPane.showMessageDialog(null, "Los datos se guardaron Correctamente");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -204,6 +227,7 @@ public class agregarProducto extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
@@ -353,6 +377,7 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precio1.setForeground(new java.awt.Color(255, 255, 255));
         precio1.setText("Mayoreo");
+        precio1.setOpaque(false);
         precio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio1ActionPerformed(evt);
@@ -361,6 +386,7 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precio2.setForeground(new java.awt.Color(255, 255, 255));
         precio2.setText("Publico General");
+        precio2.setOpaque(false);
         precio2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio2ActionPerformed(evt);
@@ -369,6 +395,7 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precio3.setForeground(new java.awt.Color(255, 255, 255));
         precio3.setText("Descuento");
+        precio3.setOpaque(false);
         precio3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio3ActionPerformed(evt);
@@ -377,6 +404,7 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precio4.setForeground(new java.awt.Color(255, 255, 255));
         precio4.setText("Menudeo");
+        precio4.setOpaque(false);
         precio4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio4ActionPerformed(evt);
@@ -385,6 +413,7 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precio5.setForeground(new java.awt.Color(255, 255, 255));
         precio5.setText("Especial");
+        precio5.setOpaque(false);
         precio5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio5ActionPerformed(evt);
@@ -639,6 +668,14 @@ public class agregarProducto extends javax.swing.JFrame {
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ajustes.png"))); // NOI18N
         jMenu3.setText("Ajustes");
 
+        jMenuItem5.setText("Inventario");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
+
         jMenuItem3.setText("Agregar Categoria");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -752,6 +789,7 @@ public class agregarProducto extends javax.swing.JFrame {
         insertPorcentaje(cla, precio3, id3, descrip3);
         insertPorcentaje(cla, precio4, id4, descrip4);
         insertPorcentaje(cla, precio5, id5, descrip5);
+        insertInventario();
         limpiarDatos();
         //        Producto p = new Producto();
         //        p.setVisible(true);
@@ -797,14 +835,20 @@ public class agregarProducto extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        Inventario view = new Inventario();
+        view.setVisible(true);
+        //        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        agregarCategoria view=new agregarCategoria();
+        agregarCategoria view = new agregarCategoria();
         view.setVisible(true);
         //        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        agregarMedidas view=new agregarMedidas();
+        agregarMedidas view = new agregarMedidas();
         view.setVisible(true);
         //        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -874,6 +918,7 @@ public class agregarProducto extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

@@ -1,7 +1,8 @@
-package Principal;
+package Ajustes;
 
 import Database.Conneccion;
 import Principal.Principal;
+import Principal.ScreenAddUser;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

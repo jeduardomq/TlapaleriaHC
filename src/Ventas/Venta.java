@@ -20,6 +20,8 @@ public class Venta extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 //        this.setExtendedState(MAXIMIZED_BOTH);
         cargartabla("");
+        lista.setVisible(false);
+        left.setVisible(false);
 
     }
 
@@ -30,6 +32,8 @@ public class Venta extends javax.swing.JFrame {
 //        cargartabla("");
         this.nicknam = nickname;
         USER.setText(nicknam);
+        lista.setVisible(false);
+        left.setVisible(false);
     }
 
     public void cargartabla(String valor) {

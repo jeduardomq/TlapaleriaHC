@@ -1,7 +1,8 @@
-package Principal;
+package Ajustes;
 
 import Database.Conneccion;
 import Principal.Principal;
+import Principal.ScreenAddUser;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -110,12 +111,17 @@ public class agregarCategoria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
-
+    
     public void llenarDatos(String clave, String cat, String desc) {
         catt.setText(cat);
         descripcion.setText(desc);
     }
-    
+
+    public void limpiar() {
+        catt.setText("");
+        descripcion.setText("");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -293,6 +299,7 @@ public class agregarCategoria extends javax.swing.JFrame {
             String nombre = tabla.getValueAt(fila, 1).toString();
             String des = tabla.getValueAt(fila, 2).toString();
             modificar(clave, nombre, des);
+            limpiar();
             GUARDAR.setVisible(false);
             MODIFICAR1.setVisible(true);
         }
