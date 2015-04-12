@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 public class modificarProducto extends javax.swing.JFrame {
 
     String clave, prov, nombre, descripci, marcaa, precioo, volumen, cat;
-    String nicknam="";
+    String nicknam = "";
 
     //nombre, marca,precio, volumen, sku,descripcio,,clave
     public modificarProducto(String clav, String pro, String nombr, String descripcio, String marc, String preci, String volume, String ca) {
@@ -46,7 +46,7 @@ public class modificarProducto extends javax.swing.JFrame {
         precioC3.setEnabled(false);
         precioC4.setEnabled(false);
         precioC5.setEnabled(false);
-        
+
         porcentajes1(clav, "1");
         porcentajes2(clav, "2");
         porcentajes3(clav, "3");
@@ -91,7 +91,7 @@ public class modificarProducto extends javax.swing.JFrame {
     public void porcentajes2(String clav, String id) {
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-                String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
+        String aSQL = "SELECT cveProducto, porcentaje,idPrecio FROM detprecio "
                 + "WHERE cveProducto = '" + clav + "' && idPrecio='" + id + "'";
         try {
             Statement st = cn.createStatement();
@@ -175,7 +175,7 @@ public class modificarProducto extends javax.swing.JFrame {
                 + "precioCompra=?, "
                 + "medida=?,"
                 + "categoria=?"
-                + "WHERE cveProducto = '" + clave+"'";
+                + "WHERE cveProducto = '" + clave + "'";
         String claves = Cla.getText();
         String skus = Sku.getText();
         String nombres = nom.getText();
@@ -214,7 +214,7 @@ public class modificarProducto extends javax.swing.JFrame {
                 + "porcentaje=?, "
                 + "idPrecio=?, "
                 + "descripcion=? "
-                + "WHERE cveProducto = '" + clave+"' && idPrecio = '" + id+"'";
+                + "WHERE cveProducto = '" + clave + "' && idPrecio = '" + id + "'";
         try {
             PreparedStatement pst = cn.prepareStatement(aSQL);
             pst.setString(1, clave);
@@ -416,6 +416,11 @@ public class modificarProducto extends javax.swing.JFrame {
                 precioActionPerformed(evt);
             }
         });
+        precio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioKeyTyped(evt);
+            }
+        });
 
         categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -462,6 +467,7 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precio1.setForeground(new java.awt.Color(255, 255, 255));
         precio1.setText("Mayoreo");
+        precio1.setOpaque(false);
         precio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio1ActionPerformed(evt);
@@ -470,6 +476,7 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precio2.setForeground(new java.awt.Color(255, 255, 255));
         precio2.setText("Publico General");
+        precio2.setOpaque(false);
         precio2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio2ActionPerformed(evt);
@@ -478,6 +485,7 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precio3.setForeground(new java.awt.Color(255, 255, 255));
         precio3.setText("Descuento");
+        precio3.setOpaque(false);
         precio3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio3ActionPerformed(evt);
@@ -486,6 +494,7 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precio4.setForeground(new java.awt.Color(255, 255, 255));
         precio4.setText("Menudeo");
+        precio4.setOpaque(false);
         precio4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio4ActionPerformed(evt);
@@ -494,6 +503,7 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precio5.setForeground(new java.awt.Color(255, 255, 255));
         precio5.setText("Especial");
+        precio5.setOpaque(false);
         precio5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precio5ActionPerformed(evt);
@@ -502,6 +512,11 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precioC1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC1.setText("0");
+        precioC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC1KeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -513,6 +528,11 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precioC2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC2.setText("0");
+        precioC2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC2KeyTyped(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -520,6 +540,11 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precioC3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC3.setText("0");
+        precioC3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC3KeyTyped(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -527,6 +552,11 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precioC4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC4.setText("0");
+        precioC4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC4KeyTyped(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -534,6 +564,11 @@ public class modificarProducto extends javax.swing.JFrame {
 
         precioC5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC5.setText("0");
+        precioC5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC5KeyTyped(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -826,7 +861,7 @@ public class modificarProducto extends javax.swing.JFrame {
             evt.consume();
         }
 
-        if (Cla.getText().length() == 11) {
+        if (Cla.getText().length() == 10) {
             evt.consume();
         }
     }//GEN-LAST:event_ClaKeyTyped
@@ -836,7 +871,7 @@ public class modificarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_marActionPerformed
 
     private void marKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_marKeyTyped
-        if (mar.getText().length() == 18) {
+        if (mar.getText().length() == 25) {
             evt.consume();
         }
     }//GEN-LAST:event_marKeyTyped
@@ -846,7 +881,7 @@ public class modificarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_descripcionActionPerformed
 
     private void descripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descripcionKeyTyped
-        if (descripcion.getText().length() == 35) {
+        if (descripcion.getText().length() == 50) {
             evt.consume();
         }
     }//GEN-LAST:event_descripcionKeyTyped
@@ -868,17 +903,19 @@ public class modificarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_SkuActionPerformed
 
     private void SkuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SkuKeyTyped
-        if (Sku.getText().length() == 18) {
+        if (Sku.getText().length() == 30) {
             evt.consume();
         }
     }//GEN-LAST:event_SkuKeyTyped
 
     private void nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomActionPerformed
-        // TODO add your handling code here:
+        nom.transferFocus();
     }//GEN-LAST:event_nomActionPerformed
 
     private void nomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomKeyTyped
-        // TODO add your handling code here:
+        if (nom.getText().length() == 25) {
+            evt.consume();
+        }
     }//GEN-LAST:event_nomKeyTyped
 
     private void precio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio1ActionPerformed
@@ -924,6 +961,78 @@ public class modificarProducto extends javax.swing.JFrame {
         view.setVisible(true);
         //        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioKeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precio.getText().length() == 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioKeyTyped
+
+    private void precioC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC1KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC1.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC1KeyTyped
+
+    private void precioC2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC2KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC2.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC2KeyTyped
+
+    private void precioC3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC3KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC3.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC3KeyTyped
+
+    private void precioC4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC4KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC4.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC4KeyTyped
+
+    private void precioC5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC5KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC5.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC5KeyTyped
 
     /**
      * @param args the command line arguments

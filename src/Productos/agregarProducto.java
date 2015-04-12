@@ -331,6 +331,11 @@ public class agregarProducto extends javax.swing.JFrame {
                 precioActionPerformed(evt);
             }
         });
+        precio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioKeyTyped(evt);
+            }
+        });
 
         categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -427,6 +432,11 @@ public class agregarProducto extends javax.swing.JFrame {
                 precioC1ActionPerformed(evt);
             }
         });
+        precioC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC1KeyTyped(evt);
+            }
+        });
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
@@ -438,6 +448,11 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precioC2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC2.setText("0");
+        precioC2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC2KeyTyped(evt);
+            }
+        });
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
@@ -445,6 +460,11 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precioC3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC3.setText("0");
+        precioC3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC3KeyTyped(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -452,6 +472,11 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precioC4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC4.setText("0");
+        precioC4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC4KeyTyped(evt);
+            }
+        });
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
@@ -459,6 +484,11 @@ public class agregarProducto extends javax.swing.JFrame {
 
         precioC5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precioC5.setText("0");
+        precioC5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                precioC5KeyTyped(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -710,7 +740,7 @@ public class agregarProducto extends javax.swing.JFrame {
             evt.consume();
         }
 
-        if (Cla.getText().length() == 11) {
+        if (Cla.getText().length() == 10) {
             evt.consume();
         }
     }//GEN-LAST:event_ClaKeyTyped
@@ -720,7 +750,7 @@ public class agregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_marcaActionPerformed
 
     private void marcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_marcaKeyTyped
-        if (marca.getText().length() == 18) {
+        if (marca.getText().length() == 25) {
             evt.consume();
         }
     }//GEN-LAST:event_marcaKeyTyped
@@ -730,7 +760,7 @@ public class agregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_descripcionActionPerformed
 
     private void descripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descripcionKeyTyped
-        if (descripcion.getText().length() == 35) {
+        if (descripcion.getText().length() == 50) {
             evt.consume();
         }
     }//GEN-LAST:event_descripcionKeyTyped
@@ -752,17 +782,19 @@ public class agregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_SkuProveedorActionPerformed
 
     private void SkuProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SkuProveedorKeyTyped
-        if (SkuProveedor.getText().length() == 18) {
+        if (SkuProveedor.getText().length() == 30) {
             evt.consume();
         }
     }//GEN-LAST:event_SkuProveedorKeyTyped
 
     private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
-        // TODO add your handling code here:
+nombre.transferFocus();
     }//GEN-LAST:event_nombreActionPerformed
 
     private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
-        // TODO add your handling code here:
+                if (nombre.getText().length() == 25) {
+            evt.consume();
+        }
     }//GEN-LAST:event_nombreKeyTyped
 
     private void GUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GUARDARActionPerformed
@@ -852,6 +884,78 @@ public class agregarProducto extends javax.swing.JFrame {
         view.setVisible(true);
         //        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioKeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precio.getText().length() == 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioKeyTyped
+
+    private void precioC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC1KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC1.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC1KeyTyped
+
+    private void precioC2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC2KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC2.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC2KeyTyped
+
+    private void precioC3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC3KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC3.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC3KeyTyped
+
+    private void precioC4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC4KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC4.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC4KeyTyped
+
+    private void precioC5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioC5KeyTyped
+        char x = evt.getKeyChar();
+
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+
+        if (precioC5.getText().length() == 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_precioC5KeyTyped
 
     /**
      * @param args the command line arguments

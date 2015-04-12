@@ -1,9 +1,6 @@
 package Inventarios;
 
 import Database.Conneccion;
-import Principal.ScreenAddUser;
-import Ajustes.agregarCategoria;
-import Ajustes.agregarMedidas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
