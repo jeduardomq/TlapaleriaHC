@@ -3,6 +3,7 @@ package Ventas;
 import Database.Conneccion;
 import Principal.Principal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,12 +16,15 @@ public class Venta extends javax.swing.JFrame {
     String nicknam;
     String busq = "nombre";
     int canti;
+    int nVenta = 1;
 
     public Venta() {
         initComponents();
         this.setLocationRelativeTo(null);
 //        this.setExtendedState(MAXIMIZED_BOTH);
         cargartabla("");
+        cveVenta();
+        carritoCompras(nVenta, "", "");
 //        carritoCompras(0);
         lista.setVisible(false);
         left.setVisible(false);
@@ -32,7 +36,9 @@ public class Venta extends javax.swing.JFrame {
         initComponents();
 //        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-//        cargartabla("");
+        cargartabla("");
+        cveVenta();
+        carritoCompras(nVenta, "", "");
         this.nicknam = nickname;
         USER.setText(nicknam);
         lista.setVisible(false);
@@ -81,35 +87,101 @@ public class Venta extends javax.swing.JFrame {
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        String aSQL = "SELECT cveProducto,nombre,descripcion, marca, precioCompra, medida,categoria FROM Producto "
-                + "WHERE cveProducto LIKE '%" + clave + "%'";
-//                + "WHERE " + busq + " LIKE '%" + valor + "%'";
+
+        String aSQL = "Select p.cveProducto,nombre,descripcion, marca, precioCompra, medida,categoria,cantidad "
+                + "From Producto p inner join detventas d on p.cveProducto=d.cveProducto ";
+//                + "WHERE cveProducto LIKE '%" + clave + "%'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
-                int cont = 1;
-                String ok = "";
-                String cantidad = "" + valor;
-                float prec = rs.getInt("precioCompra");
-                String prec2 = "" + prec * valor;
-                registro[0] = cantidad;//CANTIDAD
+
+                registro[0] = rs.getString("cantidad");
                 registro[1] = rs.getString("cveProducto");
                 registro[2] = rs.getString("nombre");
                 registro[3] = rs.getString("descripcion");
                 registro[4] = rs.getString("marca");
-//                registro[5] = rs.getString("precioCompra");
-                registro[5] = precio;
-                registro[6] = prec2;//PRECIO TOTAL
+                registro[5] = rs.getString("precioCompra");
+                float precio1 = rs.getInt("precioCompra");
+                float precio2 = rs.getInt("cantidad");
+                float total = precio1 * precio2;
+                registro[6] = "" + total;//PRECIO TOTAL
                 modelo.addRow(registro);
-                TOTAL.setText(prec2);
-                ok = (String) tabla.getValueAt(cont, 8);
-                System.out.println(ok);
-
             }
+
             tabla2.setModel(modelo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void cveVenta() {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveVenta FROM Venta ";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                VENTA.setText(rs.getString("cveVenta"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void insertDetVenta(String cveVenta, String cveProducto, String canti, String precio) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        canti = Cantidad.getText();
+//cveVenta,cveProducto,cantidad,precio
+        String aSQL = "INSERT INTO detventas (cveVenta,cveProducto,cantidad,precio)"
+                + "VALUES( ?, ?, ?,?)";
+        try {
+            PreparedStatement pst = cn.prepareStatement(aSQL);
+            pst.setString(1, cveVenta);
+            pst.setString(2, cveProducto);
+            pst.setString(3, canti);
+            pst.setString(4, precio);
+
+            int n = pst.executeUpdate();
+            if (n > 0) {
+//                JOptionPane.showMessageDialog(null, "Los datos se guardaron Correctamente");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void numVenta() {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveVenta FROM Venta ";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                VENTA.setText(rs.getString("cveVenta"));
+//                categoria.addItem(rs.getString("nombreCategoria"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void borrarVenta(String cventa, String cproducto, String cantidad, String precio) {
+        cventa = "0";
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "DELETE FROM detventa WHERE cveVenta='" + cventa + "' && cveProducto='" + cproducto + "' && cantidad='" + cantidad + "' && precio='" + precio + "'";
+        try {
+            PreparedStatement pstm = cn.prepareStatement(aSQL);
+            pstm.executeUpdate();
+            pstm.close();
+            JOptionPane.showMessageDialog(this, "Eliminacion Exitosa", "Eliminacion", 1);
+            cargartabla("");
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -172,14 +244,14 @@ public class Venta extends javax.swing.JFrame {
 
         VENTA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         VENTA.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel7.add(VENTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 100, 20));
+        jPanel7.add(VENTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 100, 20));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Venta");
         jPanel7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 200, 30));
+        getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 200, 40));
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -246,12 +318,12 @@ public class Venta extends javax.swing.JFrame {
 
         jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(659, 11, 200, 138));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 870, 160));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 870, 160));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("C A R R I T O  D E  V E N T A S");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 640, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 640, 30));
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -295,7 +367,7 @@ public class Venta extends javax.swing.JFrame {
 
         jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(662, 11, 200, 158));
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 870, 180));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 870, 180));
 
         jPanel4.setBackground(new java.awt.Color(255, 73, 72));
 
@@ -385,8 +457,8 @@ public class Venta extends javax.swing.JFrame {
         Calle4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Calle4.setForeground(new java.awt.Color(255, 255, 255));
         Calle4.setText("Total:");
-        getContentPane().add(Calle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, -1, -1));
-        getContentPane().add(TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 510, 70, -1));
+        getContentPane().add(Calle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 540, -1, -1));
+        getContentPane().add(TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 540, 70, -1));
 
         descrip.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Precio a Mayoreo", "Precio a Publico en General", "Precio a Publico en General con descuento", "Precio a Menudeo", "Precio a Especial" }));
         descrip.addActionListener(new java.awt.event.ActionListener() {
@@ -417,13 +489,21 @@ public class Venta extends javax.swing.JFrame {
     private void AGREGARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AGREGARActionPerformed
         int fila = tabla.getSelectedRow();
         if (fila >= 0) {
-            String clave = tabla.getValueAt(fila, 0).toString();
+            String cveVenta = VENTA.getText();
+            String cveProducto = tabla.getValueAt(fila, 0).toString();
             String precio = tabla.getValueAt(fila, 8).toString();
 //            carritoCompras(fila);
             Cantidad.setEditable(true);
-            canti = Integer.parseInt(Cantidad.getText());
-            carritoCompras(canti, clave, precio);
+//            canti = Integer.parseInt(Cantidad.getText());
+            String cantidad = Cantidad.getText();
+//            carritoCompras(canti, clave, precio);
+
+            insertDetVenta(cveVenta, cveProducto, cantidad, precio);
+            cargartabla("");
+            carritoCompras(nVenta, "", "");
         }
+
+
     }//GEN-LAST:event_AGREGARActionPerformed
 
     private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZARActionPerformed
@@ -433,7 +513,22 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_FINALIZARActionPerformed
 
     private void CANCELARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CANCELARActionPerformed
+//        numVenta();
+//        int reply = JOptionPane.showConfirmDialog(this, "¿Desea Eliminar el Producto? ", "ELIMINAR", JOptionPane.YES_NO_OPTION);
+//        if (reply == JOptionPane.YES_OPTION) {
+//            JOptionPane.showMessageDialog(this,"NO TIENES EL PODER");
+        int fila = tabla.getSelectedRow();
+        if (fila >= 0) {
+            String cventa = "0";
+            String cantidad = tabla.getValueAt(fila, 0).toString();
+            String cproducto = tabla.getValueAt(fila, 1).toString();
+            String precio = tabla.getValueAt(fila, 5).toString();
 
+            borrarVenta(cventa, cproducto, cantidad, precio);
+            cargartabla("");
+            carritoCompras(nVenta, "", "");
+//            }
+        }
     }//GEN-LAST:event_CANCELARActionPerformed
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed

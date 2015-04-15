@@ -208,7 +208,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_PROVEEDORESActionPerformed
 
     private void VENTASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VENTASActionPerformed
-        seleccionVenta view = new seleccionVenta();
+        seleccionVenta view = new seleccionVenta(nicknam);
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_VENTASActionPerformed

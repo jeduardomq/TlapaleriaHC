@@ -116,9 +116,13 @@ public class Inventario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         minimo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        FINALIZAR1 = new javax.swing.JButton();
         MODIFICAR1 = new javax.swing.JButton();
         GUARDAR = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -235,6 +239,16 @@ public class Inventario extends javax.swing.JFrame {
         jLabel3.setText("Stock Minimo:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 100, -1));
 
+        FINALIZAR1.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
+        FINALIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        FINALIZAR1.setText("Finalizar");
+        FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FINALIZAR1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 430, 140, 50));
+
         MODIFICAR1.setFont(new java.awt.Font("Open Sans", 1, 15)); // NOI18N
         MODIFICAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/actualizar.png"))); // NOI18N
         MODIFICAR1.setText("Modificar");
@@ -258,6 +272,17 @@ public class Inventario extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(102, 102, 102));
         jLabel1.setOpaque(true);
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 530));
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/archivo.png"))); // NOI18N
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        jMenuItem1.setText("Salir");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -311,6 +336,12 @@ public class Inventario extends javax.swing.JFrame {
         }
         cargartabla("");
     }//GEN-LAST:event_GUARDARActionPerformed
+
+    private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
+        //        Principal view = new Principal("nicknam");
+        //        view.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_FINALIZAR1ActionPerformed
     public static void main(String args[]) {        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -340,6 +371,7 @@ public class Inventario extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BUSCAR;
+    private javax.swing.JButton FINALIZAR1;
     private javax.swing.JButton GUARDAR;
     private javax.swing.JButton MODIFICAR1;
     private javax.swing.JLabel USER;
@@ -350,6 +382,9 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane5;
