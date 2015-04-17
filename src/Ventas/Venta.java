@@ -17,6 +17,7 @@ public class Venta extends javax.swing.JFrame {
     String busq = "nombre";
     int canti;
     int nVenta = 1;
+    int porcentaje;
 
     public Venta() {
         initComponents();
@@ -29,7 +30,7 @@ public class Venta extends javax.swing.JFrame {
         lista.setVisible(false);
         left.setVisible(false);
 //        Cantidad.setEditable(false);
-
+        totales();
     }
 
     public Venta(String nickname) {
@@ -44,6 +45,7 @@ public class Venta extends javax.swing.JFrame {
         lista.setVisible(false);
         left.setVisible(false);
 //        Cantidad.setEditable(false);
+        totales();
     }
 
     public void cargartabla(String valor) {
@@ -67,6 +69,8 @@ public class Venta extends javax.swing.JFrame {
                 registro[5] = rs.getString("precioCompra");
                 registro[6] = rs.getString("medida");
                 registro[7] = rs.getString("categoria");
+//                float porc= rs.getFloat("precioCompra");
+//                String a=""+porc*porcentaje;
                 registro[8] = rs.getString("precioCompra");
 
                 modelo.addRow(registro);
@@ -82,7 +86,7 @@ public class Venta extends javax.swing.JFrame {
     }
 
     public void carritoCompras(int valor, String clave, String precio) {
-        String[] titulos = {"Cantidad", "cveProducto", "Nombre", "Descripcion", "Marca", "Precio", "Precio Total"};
+        String[] titulos = {"Cantidad", "cveProducto", "Nombre", "Descripcion", "Marca", "Precio Unitario", "Precio Total"};
         String[] registro = new String[7];
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
@@ -108,7 +112,6 @@ public class Venta extends javax.swing.JFrame {
                 registro[6] = "" + total;//PRECIO TOTAL
                 modelo.addRow(registro);
             }
-
             tabla2.setModel(modelo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -131,25 +134,28 @@ public class Venta extends javax.swing.JFrame {
     }
 
     public void insertDetVenta(String cveVenta, String cveProducto, String canti, String precio) {
-        Conneccion mysql = new Conneccion();
-        Connection cn = mysql.conectar();
-        canti = Cantidad.getText();
-//cveVenta,cveProducto,cantidad,precio
-        String aSQL = "INSERT INTO detventas (cveVenta,cveProducto,cantidad,precio)"
-                + "VALUES( ?, ?, ?,?)";
-        try {
-            PreparedStatement pst = cn.prepareStatement(aSQL);
-            pst.setString(1, cveVenta);
-            pst.setString(2, cveProducto);
-            pst.setString(3, canti);
-            pst.setString(4, precio);
+        int fila = tabla.getSelectedRow();
+        if (fila >= 0) {
+            canti = Cantidad.getText();
+            Conneccion mysql = new Conneccion();
+            Connection cn = mysql.conectar();
+            precio = tabla.getValueAt(fila, 8).toString();
+            String aSQL = "INSERT INTO detventas (cveVenta,cveProducto,cantidad,precio)"
+                    + "VALUES( ?, ?, ?,?)";
+            try {
+                PreparedStatement pst = cn.prepareStatement(aSQL);
+                pst.setString(1, cveVenta);
+                pst.setString(2, cveProducto);
+                pst.setString(3, canti);
+                pst.setString(4, precio);
 
-            int n = pst.executeUpdate();
-            if (n > 0) {
+                int n = pst.executeUpdate();
+                if (n > 0) {
 //                JOptionPane.showMessageDialog(null, "Los datos se guardaron Correctamente");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
         }
     }
 
@@ -170,10 +176,71 @@ public class Venta extends javax.swing.JFrame {
     }
 
     public void borrarVenta(String cventa, String cproducto, String cantidad, String precio) {
-        cventa = "0";
+        int fila = tabla.getSelectedRow();
+        if (fila >= 0) {
+            cventa = "1";
+            cantidad = tabla.getValueAt(fila, 0).toString();
+            cproducto = tabla.getValueAt(fila, 1).toString();
+            precio = tabla.getValueAt(fila, 5).toString();
+            cventa = "1";
+            Conneccion mysql = new Conneccion();
+            Connection cn = mysql.conectar();
+            String aSQL = "DELETE FROM detventas WHERE cveVenta = " + cventa + " AND cveProducto = " + cproducto + " AND cantidad = " + cantidad + " AND precio = " + precio;
+                         //DELETE FROM detventas WHERE `cveVenta` = 1 AND `cveProducto` = 1234 AND cantidad = 1 AND precio = 300.00;
+            try {
+                PreparedStatement pstm = cn.prepareStatement(aSQL);
+                pstm.executeUpdate();
+                pstm.close();
+                JOptionPane.showMessageDialog(this, "Eliminacion Exitosa", "Eliminacion", 1);
+                cargartabla("");
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    public void totales() {
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        String aSQL = "DELETE FROM detventa WHERE cveVenta='" + cventa + "' && cveProducto='" + cproducto + "' && cantidad='" + cantidad + "' && precio='" + precio + "'";
+        String aSQL = "SELECT sum(precio) FROM detVentas WHERE cveVenta='1'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                float sub = rs.getInt("sum(precio)");
+                SUBTOTAL.setText("" + sub);
+                float t = (float) (sub * 0.16);
+                float tt = t + sub;
+                TOTAL.setText("" + tt);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void descuentos(String desc) {
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "SELECT cveProducto,porcentaje,idPrecio,descripcion FROM detprecio WHERE descripcion='" + desc + "'";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(aSQL);
+            while (rs.next()) {
+                int a = rs.getInt("porcentaje");
+//                descrip.addItem(rs.getString("porcentaje"));
+                porcentaje = a;
+                System.out.println(a);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    public void cancelarCompra() {
+        int cventa = nVenta;
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "DELETE FROM Venta WHERE cveVenta = '" + cventa + "'";
         try {
             PreparedStatement pstm = cn.prepareStatement(aSQL);
             pstm.executeUpdate();
@@ -182,6 +249,33 @@ public class Venta extends javax.swing.JFrame {
             cargartabla("");
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    public void finalizarCompra() {
+        int clave = nVenta;
+        String sub = SUBTOTAL.getText();
+        String tot = TOTAL.getText();
+
+        Conneccion mysql = new Conneccion();
+        Connection cn = mysql.conectar();
+        String aSQL = "UPDATE Venta SET "
+                + "subtotal=?, "
+                + "total=? "
+                + "WHERE cveProducto = '" + clave + "'";
+
+        try {
+            PreparedStatement pst = cn.prepareStatement(aSQL);
+            pst.setString(1, sub);
+            pst.setString(2, tot);
+
+            int n = pst.executeUpdate();
+
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
@@ -220,6 +314,9 @@ public class Venta extends javax.swing.JFrame {
         Calle4 = new javax.swing.JLabel();
         TOTAL = new javax.swing.JTextField();
         descrip = new javax.swing.JComboBox();
+        FINALIZAR1 = new javax.swing.JButton();
+        SUBTOTAL = new javax.swing.JTextField();
+        Calle5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -229,14 +326,14 @@ public class Venta extends javax.swing.JFrame {
         setTitle("Ventas");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        FINALIZAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
-        FINALIZAR.setText("Finalizar Compra");
+        FINALIZAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cancelar.png"))); // NOI18N
+        FINALIZAR.setText("Cancelar Compra");
         FINALIZAR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FINALIZARActionPerformed(evt);
             }
         });
-        getContentPane().add(FINALIZAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 560, -1, -1));
+        getContentPane().add(FINALIZAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
 
         jPanel7.setBackground(new java.awt.Color(102, 102, 102));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -457,8 +554,11 @@ public class Venta extends javax.swing.JFrame {
         Calle4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Calle4.setForeground(new java.awt.Color(255, 255, 255));
         Calle4.setText("Total:");
-        getContentPane().add(Calle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 540, -1, -1));
-        getContentPane().add(TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 540, 70, -1));
+        getContentPane().add(Calle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 570, -1, -1));
+
+        TOTAL.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        TOTAL.setText("0");
+        getContentPane().add(TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 570, 70, -1));
 
         descrip.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Precio a Mayoreo", "Precio a Publico en General", "Precio a Publico en General con descuento", "Precio a Menudeo", "Precio a Especial" }));
         descrip.addActionListener(new java.awt.event.ActionListener() {
@@ -467,6 +567,24 @@ public class Venta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(descrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 290, -1));
+
+        FINALIZAR1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/finalizar.png"))); // NOI18N
+        FINALIZAR1.setText("Finalizar Compra");
+        FINALIZAR1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FINALIZAR1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(FINALIZAR1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 560, -1, -1));
+
+        SUBTOTAL.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        SUBTOTAL.setText("0");
+        getContentPane().add(SUBTOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 540, 70, -1));
+
+        Calle5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Calle5.setForeground(new java.awt.Color(255, 255, 255));
+        Calle5.setText("subTotal:");
+        getContentPane().add(Calle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 540, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setOpaque(true);
@@ -501,13 +619,16 @@ public class Venta extends javax.swing.JFrame {
             insertDetVenta(cveVenta, cveProducto, cantidad, precio);
             cargartabla("");
             carritoCompras(nVenta, "", "");
+            totales();
+
         }
 
 
     }//GEN-LAST:event_AGREGARActionPerformed
 
     private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZARActionPerformed
-        Principal view = new Principal(nicknam);
+        cancelarCompra();
+        Principal view = new Principal();
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_FINALIZARActionPerformed
@@ -527,6 +648,7 @@ public class Venta extends javax.swing.JFrame {
             borrarVenta(cventa, cproducto, cantidad, precio);
             cargartabla("");
             carritoCompras(nVenta, "", "");
+            totales();
 //            }
         }
     }//GEN-LAST:event_CANCELARActionPerformed
@@ -562,7 +684,17 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_listaActionPerformed
 
     private void descripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descripActionPerformed
+        String descr = (String) descrip.getSelectedItem();
+        descuentos(descr);
     }//GEN-LAST:event_descripActionPerformed
+
+    private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
+        finalizarCompra();
+
+        Principal view = new Principal();
+        view.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_FINALIZAR1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -607,9 +739,12 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JTextField BUSCAR;
     private javax.swing.JButton CANCELAR;
     private javax.swing.JLabel Calle4;
+    private javax.swing.JLabel Calle5;
     private javax.swing.JTextField Cantidad;
     private javax.swing.JButton FINALIZAR;
+    private javax.swing.JButton FINALIZAR1;
     private javax.swing.JButton MODIFICAR;
+    private javax.swing.JTextField SUBTOTAL;
     private javax.swing.JTextField TOTAL;
     private javax.swing.JLabel USER;
     private javax.swing.JLabel VENTA;
