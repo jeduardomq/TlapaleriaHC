@@ -7,7 +7,6 @@ import Inventarios.Inventario;
 import Productos.Producto;
 import Proveedores.Proveedor;
 import Reportes.Reporte;
-import Ventas.seleccionVenta;
 import Ventas.verVentas;
 import javax.swing.JOptionPane;
 
@@ -228,7 +227,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_PROVEEDORESActionPerformed
 
     private void VENTASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VENTASActionPerformed
-        seleccionVenta view = new seleccionVenta(nicknam);
+        verVentas view = new verVentas();
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_VENTASActionPerformed

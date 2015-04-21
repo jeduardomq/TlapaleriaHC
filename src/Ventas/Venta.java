@@ -22,29 +22,28 @@ public class Venta extends javax.swing.JFrame {
     public Venta() {
         initComponents();
         this.setLocationRelativeTo(null);
-//        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setResizable(false);
         cargartabla("");
         cveVenta();
+        nVenta = Integer.parseInt(VENTA.getText());
         carritoCompras(nVenta, "", "");
-//        carritoCompras(0);
         lista.setVisible(false);
         left.setVisible(false);
-//        Cantidad.setEditable(false);
         totales();
     }
 
     public Venta(String nickname) {
         initComponents();
-//        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         cargartabla("");
         cveVenta();
+        nVenta = Integer.parseInt(VENTA.getText());
         carritoCompras(nVenta, "", "");
         this.nicknam = nickname;
         USER.setText(nicknam);
         lista.setVisible(false);
         left.setVisible(false);
-//        Cantidad.setEditable(false);
         totales();
     }
 
@@ -121,12 +120,13 @@ public class Venta extends javax.swing.JFrame {
     public void cveVenta() {
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        String aSQL = "SELECT cveVenta FROM Venta ";
+//        String aSQL = "SELECT cveVenta FROM Venta ";
+        String aSQL = "SELECT MAX(cveVenta) FROM Venta";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
-                VENTA.setText(rs.getString("cveVenta"));
+                VENTA.setText(rs.getString("MAX(cveVenta)"));
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -186,7 +186,7 @@ public class Venta extends javax.swing.JFrame {
             Conneccion mysql = new Conneccion();
             Connection cn = mysql.conectar();
             String aSQL = "DELETE FROM detventas WHERE cveVenta = " + cventa + " AND cveProducto = " + cproducto + " AND cantidad = " + cantidad + " AND precio = " + precio;
-                         //DELETE FROM detventas WHERE `cveVenta` = 1 AND `cveProducto` = 1234 AND cantidad = 1 AND precio = 300.00;
+            //DELETE FROM detventas WHERE `cveVenta` = 1 AND `cveProducto` = 1234 AND cantidad = 1 AND precio = 300.00;
             try {
                 PreparedStatement pstm = cn.prepareStatement(aSQL);
                 pstm.executeUpdate();
@@ -262,7 +262,7 @@ public class Venta extends javax.swing.JFrame {
         String aSQL = "UPDATE Venta SET "
                 + "subtotal=?, "
                 + "total=? "
-                + "WHERE cveProducto = '" + clave + "'";
+                + "WHERE cveVenta = '" + clave + "'";
 
         try {
             PreparedStatement pst = cn.prepareStatement(aSQL);
