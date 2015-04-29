@@ -2,7 +2,6 @@ package Ventas;
 
 import Productos.*;
 import Database.Conneccion;
-import Principal.Principal;
 import Principal.ScreenAddUser;
 import Ajustes.agregarCategoria;
 import Ajustes.agregarMedidas;
@@ -23,7 +22,6 @@ public class verVentas extends javax.swing.JFrame {
 
     public verVentas() {
         initComponents();
-//        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         buscar();
         cargartabla("");
@@ -33,7 +31,6 @@ public class verVentas extends javax.swing.JFrame {
 
     public verVentas(String nickname) {
         initComponents();
-//        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         buscar();
         cargartabla("");

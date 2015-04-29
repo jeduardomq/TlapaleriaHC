@@ -146,6 +146,11 @@ public class agregarProveedor extends javax.swing.JFrame {
         calle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         numero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        numero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numeroActionPerformed(evt);
+            }
+        });
 
         ciudad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -405,6 +410,10 @@ public class agregarProveedor extends javax.swing.JFrame {
     private void rfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rfcActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rfcActionPerformed
+
+    private void numeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numeroActionPerformed
 
     /**
      * @param args the command line arguments

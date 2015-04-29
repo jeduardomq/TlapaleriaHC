@@ -308,6 +308,11 @@ public class agregarCliente extends javax.swing.JFrame {
         jLabel11.setText("Codigo Postal");
 
         calle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        calle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calleActionPerformed(evt);
+            }
+        });
 
         numero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -405,6 +410,10 @@ public class agregarCliente extends javax.swing.JFrame {
     private void rfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rfcActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rfcActionPerformed
+
+    private void calleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calleActionPerformed
 
     /**
      * @param args the command line arguments

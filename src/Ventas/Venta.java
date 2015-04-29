@@ -16,39 +16,43 @@ public class Venta extends javax.swing.JFrame {
     String nicknam;
     String busq = "nombre";
     int canti;
-    int nVenta = 1;
-    int porcentaje;
+    int nVenta;
+    float porcentaje = 0;
 
     public Venta() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cargartabla("");
         cveVenta();
         nVenta = Integer.parseInt(VENTA.getText());
+        cargartabla("");
         carritoCompras(nVenta, "", "");
         lista.setVisible(false);
         left.setVisible(false);
         totales();
+        tabla2.getColumnModel().getColumn(0).setMaxWidth(0);
+//        AGREGAR.setText("Agregar");
     }
 
     public Venta(String nickname) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cargartabla("");
         cveVenta();
         nVenta = Integer.parseInt(VENTA.getText());
+        cargartabla("");
         carritoCompras(nVenta, "", "");
         this.nicknam = nickname;
         USER.setText(nicknam);
         lista.setVisible(false);
         left.setVisible(false);
         totales();
+        tabla2.getColumnModel().getColumn(0).setMaxWidth(0);
+//        AGREGAR.setText("Agregar");
     }
 
     public void cargartabla(String valor) {
-        String[] titulos = {"cveProducto", "Proveedor", "Nombre", "Descripcion", "Marca", "Precio", "Medida", "Categoria", "Precio"};
+        String[] titulos = {"cveProducto", "Proveedor", "Nombre", "Descripcion", "Marca", "Medida", "Categoria", "Precio", "Total"};
         String[] registro = new String[9];
         String aSQL = "";
         modelo = new DefaultTableModel(null, titulos);
@@ -65,16 +69,16 @@ public class Venta extends javax.swing.JFrame {
                 registro[2] = rs.getString("nombre");
                 registro[3] = rs.getString("descripcion");
                 registro[4] = rs.getString("marca");
-                registro[5] = rs.getString("precioCompra");
-                registro[6] = rs.getString("medida");
-                registro[7] = rs.getString("categoria");
-//                float porc= rs.getFloat("precioCompra");
-//                String a=""+porc*porcentaje;
-                registro[8] = rs.getString("precioCompra");
-
+                registro[5] = rs.getString("medida");
+                registro[6] = rs.getString("categoria");
+                registro[7] = rs.getString("precioCompra");
+                String descr = (String) descrip.getSelectedItem();
+                descuentos(descr);
+                registro[8] = "" + porcentaje;
                 modelo.addRow(registro);
             }
             tabla.setModel(modelo);
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -85,35 +89,38 @@ public class Venta extends javax.swing.JFrame {
     }
 
     public void carritoCompras(int valor, String clave, String precio) {
-        String[] titulos = {"Cantidad", "cveProducto", "Nombre", "Descripcion", "Marca", "Precio Unitario", "Precio Total"};
-        String[] registro = new String[7];
+        String[] titulos = {"vent", "Cantidad", "cveProducto", "Nombre", "Descripcion", "Marca", "Precio Unitario", "Precio Total"};
+        String[] registro = new String[8];
         modelo = new DefaultTableModel(null, titulos);
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
 
-        String aSQL = "Select p.cveProducto,nombre,descripcion, marca, precioCompra, medida,categoria,cantidad "
-                + "From Producto p inner join detventas d on p.cveProducto=d.cveProducto ";
-//                + "WHERE cveProducto LIKE '%" + clave + "%'";
+        String aSQL = "Select d.cveDetventa,p.cveProducto,nombre,descripcion, marca, precio, medida,categoria,cantidad "
+                + "From Producto p inner join detventas d on p.cveProducto=d.cveProducto "
+                + "Where d.cveVenta=" + VENTA.getText();
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
 
-                registro[0] = rs.getString("cantidad");
-                registro[1] = rs.getString("cveProducto");
-                registro[2] = rs.getString("nombre");
-                registro[3] = rs.getString("descripcion");
-                registro[4] = rs.getString("marca");
-                registro[5] = rs.getString("precioCompra");
-                float precio1 = rs.getInt("precioCompra");
+                registro[0] = rs.getString("cveDetventa");
+                registro[1] = rs.getString("cantidad");
+                registro[2] = rs.getString("cveProducto");
+                registro[3] = rs.getString("nombre");
+                registro[4] = rs.getString("descripcion");
+                registro[5] = rs.getString("marca");
+                registro[6] = rs.getString("precio");
+                float precio1 = rs.getInt("precio");
                 float precio2 = rs.getInt("cantidad");
                 float total = precio1 * precio2;
-                registro[6] = "" + total;//PRECIO TOTAL
+                registro[7] = "" + total;//PRECIO TOTAL
                 modelo.addRow(registro);
             }
             tabla2.setModel(modelo);
+            tabla2.getColumnModel().getColumn(0).setMaxWidth(0);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
+            tabla2.getColumnModel().getColumn(0).setMaxWidth(0);
         }
     }
 
@@ -175,17 +182,13 @@ public class Venta extends javax.swing.JFrame {
         }
     }
 
-    public void borrarVenta(String cventa, String cproducto, String cantidad, String precio) {
-        int fila = tabla.getSelectedRow();
+    public void borrarVenta(String clave) {
+        int fila = tabla2.getSelectedRow();
         if (fila >= 0) {
-            cventa = "1";
-            cantidad = tabla.getValueAt(fila, 0).toString();
-            cproducto = tabla.getValueAt(fila, 1).toString();
-            precio = tabla.getValueAt(fila, 5).toString();
-            cventa = "1";
+            clave = tabla2.getValueAt(fila, 0).toString();
             Conneccion mysql = new Conneccion();
             Connection cn = mysql.conectar();
-            String aSQL = "DELETE FROM detventas WHERE cveVenta = " + cventa + " AND cveProducto = " + cproducto + " AND cantidad = " + cantidad + " AND precio = " + precio;
+            String aSQL = "DELETE FROM detventas WHERE cveDetventa = '" + clave + "'";
             //DELETE FROM detventas WHERE `cveVenta` = 1 AND `cveProducto` = 1234 AND cantidad = 1 AND precio = 300.00;
             try {
                 PreparedStatement pstm = cn.prepareStatement(aSQL);
@@ -193,6 +196,8 @@ public class Venta extends javax.swing.JFrame {
                 pstm.close();
                 JOptionPane.showMessageDialog(this, "Eliminacion Exitosa", "Eliminacion", 1);
                 cargartabla("");
+                carritoCompras(nVenta, "", "");
+                tabla2.getColumnModel().getColumn(0).setMaxWidth(0);
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -202,12 +207,12 @@ public class Venta extends javax.swing.JFrame {
     public void totales() {
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        String aSQL = "SELECT sum(precio) FROM detVentas WHERE cveVenta='1'";
+        String aSQL = "SELECT sum(precio) FROM detVentas WHERE cveVenta=" + VENTA.getText();
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
-                float sub = rs.getInt("sum(precio)");
+                float sub = rs.getFloat("sum(precio)");
                 SUBTOTAL.setText("" + sub);
                 float t = (float) (sub * 0.16);
                 float tt = t + sub;
@@ -221,15 +226,26 @@ public class Venta extends javax.swing.JFrame {
     public void descuentos(String desc) {
         Conneccion mysql = new Conneccion();
         Connection cn = mysql.conectar();
-        String aSQL = "SELECT cveProducto,porcentaje,idPrecio,descripcion FROM detprecio WHERE descripcion='" + desc + "'";
+        //String aSQL = "SELECT cveProducto,porcentaje,idPrecio,descripcion FROM detprecio WHERE descripcion='" + desc + "'";
+        String aSQL = "Select dv.cveVenta, p.nombre,p.cveProducto,precio,dp.descripcion,dp.porcentaje "
+                + "From detventas dv inner join producto p on dv.cveProducto=dv.cveProducto "
+                + "inner join detprecio dp on p.cveProducto=dp.cveProducto "
+                + "WHERE dp.descripcion='" + desc + "'";
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(aSQL);
             while (rs.next()) {
-                int a = rs.getInt("porcentaje");
 //                descrip.addItem(rs.getString("porcentaje"));
-                porcentaje = a;
-                System.out.println(a);
+//                System.out.print("  " + rs.getString("nombre") + " ");
+//                System.out.print("  " + rs.getInt("precio") + " ");
+//                System.out.print("  " + rs.getInt("dp.porcentaje") + " ");
+                float preci = rs.getFloat("precio");
+                float porce = rs.getFloat("dp.porcentaje");
+                float t1 = porce / 100;
+                float t2 = t1 * preci;
+                float total = t2 + preci;
+                porcentaje = (float) total;
+//                System.out.println("Total = " + total);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -277,6 +293,53 @@ public class Venta extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+    }
+
+    public void modificarVenta() {
+
+        int fila = tabla2.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad", "1"));
+
+                String clave = tabla2.getValueAt(fila, 0).toString();
+                String cventas = VENTA.getText();
+                String cproducto = tabla2.getValueAt(fila, 2).toString();
+                String precio = tabla2.getValueAt(fila, 7).toString();
+
+                Conneccion mysql = new Conneccion();
+                Connection cn = mysql.conectar();
+                String aSQL = "UPDATE detventas "
+                        + "SET cveDetVenta = ?,"
+                        + "cveVenta = ?,"
+                        + "cveProducto = ?,"
+                        + "cantidad = ?,"
+                        + "precio = ? "
+                        + "WHERE cveDetVenta = " + clave;
+                try {
+                    PreparedStatement pst = cn.prepareStatement(aSQL);
+                    pst.setString(1, clave);
+                    pst.setString(2, cventas);
+                    pst.setString(3, cproducto);
+                    pst.setInt(4, cantidad);
+                    pst.setString(5, precio);
+
+                    int n = pst.executeUpdate();
+
+                    if (n > 0) {
+//                    JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+                        carritoCompras(nVenta, "", "");
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Solo se permiten numeros");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un Producto");
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -385,6 +448,16 @@ public class Venta extends javax.swing.JFrame {
 
         Cantidad.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         Cantidad.setText("1");
+        Cantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CantidadActionPerformed(evt);
+            }
+        });
+        Cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CantidadKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -610,20 +683,14 @@ public class Venta extends javax.swing.JFrame {
             String cveVenta = VENTA.getText();
             String cveProducto = tabla.getValueAt(fila, 0).toString();
             String precio = tabla.getValueAt(fila, 8).toString();
-//            carritoCompras(fila);
             Cantidad.setEditable(true);
-//            canti = Integer.parseInt(Cantidad.getText());
             String cantidad = Cantidad.getText();
-//            carritoCompras(canti, clave, precio);
-
             insertDetVenta(cveVenta, cveProducto, cantidad, precio);
             cargartabla("");
             carritoCompras(nVenta, "", "");
             totales();
-
         }
-
-
+//        AGREGAR.setText("Agregar");
     }//GEN-LAST:event_AGREGARActionPerformed
 
     private void FINALIZARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZARActionPerformed
@@ -634,18 +701,13 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_FINALIZARActionPerformed
 
     private void CANCELARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CANCELARActionPerformed
-//        numVenta();
 //        int reply = JOptionPane.showConfirmDialog(this, "¿Desea Eliminar el Producto? ", "ELIMINAR", JOptionPane.YES_NO_OPTION);
 //        if (reply == JOptionPane.YES_OPTION) {
 //            JOptionPane.showMessageDialog(this,"NO TIENES EL PODER");
-        int fila = tabla.getSelectedRow();
+        int fila = tabla2.getSelectedRow();
         if (fila >= 0) {
-            String cventa = "0";
-            String cantidad = tabla.getValueAt(fila, 0).toString();
-            String cproducto = tabla.getValueAt(fila, 1).toString();
-            String precio = tabla.getValueAt(fila, 5).toString();
-
-            borrarVenta(cventa, cproducto, cantidad, precio);
+            String clave = tabla2.getValueAt(fila, 0).toString();
+            borrarVenta(clave);
             cargartabla("");
             carritoCompras(nVenta, "", "");
             totales();
@@ -654,7 +716,7 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_CANCELARActionPerformed
 
     private void MODIFICARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODIFICARActionPerformed
-
+        modificarVenta();
     }//GEN-LAST:event_MODIFICARActionPerformed
 
     private void BUSCARKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BUSCARKeyPressed
@@ -686,15 +748,31 @@ public class Venta extends javax.swing.JFrame {
     private void descripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descripActionPerformed
         String descr = (String) descrip.getSelectedItem();
         descuentos(descr);
+        String valor = BUSCAR.getText();
+        cargartabla(valor);
     }//GEN-LAST:event_descripActionPerformed
 
     private void FINALIZAR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FINALIZAR1ActionPerformed
         finalizarCompra();
 
-        Principal view = new Principal();
+        Principal view = new Principal(nicknam);
         view.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_FINALIZAR1ActionPerformed
+
+    private void CantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CantidadActionPerformed
+
+    }//GEN-LAST:event_CantidadActionPerformed
+
+    private void CantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantidadKeyTyped
+                char x = evt.getKeyChar();
+        if (x > '0' && x > '9') {
+            evt.consume();
+        }
+        if (Cantidad.getText().length() == 5) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_CantidadKeyTyped
 
     /**
      * @param args the command line arguments

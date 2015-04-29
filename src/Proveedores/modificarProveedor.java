@@ -256,6 +256,11 @@ public void modificar(String clave) {
         jPanel1.add(Cal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 219, -1));
 
         Num.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Num.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NumActionPerformed(evt);
+            }
+        });
         jPanel1.add(Num, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 219, -1));
 
         Ciu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -345,6 +350,10 @@ public void modificar(String clave) {
         p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MODIFICARActionPerformed
+
+    private void NumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NumActionPerformed
 
     /**
      * @param args the command line arguments
